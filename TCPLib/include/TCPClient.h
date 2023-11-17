@@ -14,8 +14,9 @@ public:
 
 	bool Connect();
 
-	// Confirms that exists a new msg from the server or not
-	bool CheckMsgFromServer();
-	// Set the amount of time in secodns to wait for a response
+	// Set the socket to be blocking or not
+	bool SetBlocking(u_long mode);
+
+	// Wait "tv_sec" for msg from server
 	bool CheckMsgFromServer(int tv_sec);
 };

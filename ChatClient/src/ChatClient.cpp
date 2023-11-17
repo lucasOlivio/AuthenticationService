@@ -98,7 +98,8 @@ bool ChatClient::JoinRoom(int idRoom, std::string& errorMsgOut)
     std::string dataTypeOut;
     std::string dataOut;
     chat::Response chatResponse;
-    if (this->m_pTCP->CheckMsgFromServer(3))
+    bool haveResponse = this->m_pTCP->CheckMsgFromServer(3);
+    if (haveResponse)
     {
         this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), dataTypeOut, dataOut);
     }
@@ -156,19 +157,17 @@ void ChatClient::LeaveRoom()
 
 std::string ChatClient::ReceiveRoomMsg()
 {
-    bool isNewMsgAvailable = this->m_pTCP->CheckMsgFromServer();
-    if (!isNewMsgAvailable)
-    {
-        // No new messages
-        return "";
-    }
-
     std::string dataTypeOut;
     std::string dataOut;
     chat::ChatMessage chatMsg;
 
-    this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), dataTypeOut, dataOut);
+    bool isNewMsg = this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), dataTypeOut, dataOut);
 
+    if (isNewMsg && dataTypeOut == "")
+    {
+        // No new messages
+        return "";
+    }
     if (dataTypeOut == "")
     {
         // Server disconnected, so should we

@@ -171,6 +171,12 @@ bool TCPBase::ReceiveRequest(SOCKET& origSocket, std::string& dataTypeOut, std::
 	// Get total packet size first to prepare buffer
 	buffer.vecBufferData.resize(sizeof(packetSize));
 	int result = recv(origSocket, (char*)(&buffer.vecBufferData[0]), sizeof(packetSize), 0);
+	int ierr = WSAGetLastError();
+	if (ierr == WSAEWOULDBLOCK) {  // currently no data available
+		dataTypeOut = "";
+		dataOut = "";
+		return true;
+	}
 	if (result == SOCKET_ERROR) {
 		this->m_SocketError("recv", result, false);
 		return false;
