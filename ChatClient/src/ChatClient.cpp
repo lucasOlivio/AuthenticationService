@@ -1,9 +1,10 @@
 #include "ChatClient.h"
+#include "chat.pb.h"
 
 ChatClient::ChatClient()
 {
-	this->m_idRoom = 0;
-    this->m_username = "";
+	this->m_idRoom = -1;
+    this->m_idUser = -1;
 	this->m_pTCP = nullptr;
     this->m_isInitialized = false;
 }
@@ -35,7 +36,7 @@ bool ChatClient::Initialize(const char* host, const char* port)
 
 void ChatClient::Destroy()
 {
-    if (this->m_idRoom)
+    if (this->m_idRoom > -1)
     {
         // If its in a room, we must exit the room first to clear the username
         this->LeaveRoom();
@@ -48,7 +49,7 @@ void ChatClient::Destroy()
 
 bool ChatClient::IsInRoom()
 {
-    if (this->m_idRoom > 0)
+    if (this->m_idRoom > -1)
     {
         return true;
     }
@@ -60,39 +61,77 @@ bool ChatClient::IsInRoom()
 
 void ChatClient::SendChatMessage(const std::string& msg)
 {
-    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), myTcp::MSG_TYPE::CHAT_MESSAGE, 
-                                this->m_idRoom, this->m_username, msg);
+    // Build msg protobuff
+    std::string msgSerialized;
+    chat::ChatMessage chatMsg;
+    chatMsg.set_userid(this->m_idUser);
+    chatMsg.set_roomid(this->m_idRoom);
+    chatMsg.set_msg(msg.c_str());
+
+    // Serialize and send request
+    chatMsg.SerializeToString(&msgSerialized);
+
+    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), "chatmessage", msgSerialized);
     return;
 }
 
-bool ChatClient::JoinRoom(uint32 idRoom, std::string username, std::string& errorMsgOut)
+bool ChatClient::JoinRoom(int idRoom, std::string& errorMsgOut)
 {
-    // Send the request to server with the choosen username
-    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), myTcp::MSG_TYPE::ACTION, idRoom, username, "JOINROOM");
+    // DEBUG
+    //if (this->m_idUser == -1)
+    //{
+    //    errorMsgOut = "not logged in";
+    //    return false;
+    //}
+
+    // Build joinroom protobuff
+    std::string joinroomSerialized;
+    chat::JoinRoom chatJoinRoom;
+    chatJoinRoom.set_userid(this->m_idUser);
+    chatJoinRoom.set_roomid(idRoom);
+
+    // Serialize and send request
+    chatJoinRoom.SerializeToString(&joinroomSerialized);
+    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), "joinroom", joinroomSerialized);
 
     // Wait for the server's response if the user was able to join the room
-    sPacketData packetOut = sPacketData();
+    std::string dataTypeOut;
+    std::string dataOut;
+    chat::Response chatResponse;
     if (this->m_pTCP->CheckMsgFromServer(3))
     {
-        this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), packetOut);
+        this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), dataTypeOut, dataOut);
     }
     else
     {
         // No response from server
-        packetOut.header.msgType = myTcp::MSG_TYPE::RESPONSE;
-        packetOut.msg = "timeout";
+        errorMsgOut = "timeout";
+        return false;
     }
 
-    if (packetOut.header.msgType == myTcp::MSG_TYPE::RESPONSE && packetOut.msg != "ok")
+    if (dataTypeOut != "response")
+    {
+        errorMsgOut = "unexpected response";
+        return false;
+    }
+
+    bool isDeserialized = chatResponse.ParseFromString(dataOut);
+
+    if (!isDeserialized)
+    {
+        errorMsgOut = "error parsing response";
+        return false;
+    }
+
+    if (!chatResponse.success())
     {
         // Error trying to put user in new room
-        errorMsgOut = packetOut.msg;
+        errorMsgOut = chatResponse.msg();
         return false;
     }
 
     // User inserted in new room, we can update our current room
     this->m_idRoom = idRoom;
-    this->m_username = username;
     errorMsgOut = "";
 
     return true;
@@ -100,10 +139,18 @@ bool ChatClient::JoinRoom(uint32 idRoom, std::string username, std::string& erro
 
 void ChatClient::LeaveRoom()
 {
-    // Send the request to server with the choosen username
-    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), myTcp::MSG_TYPE::ACTION, this->m_idRoom, 
-                                    this->m_username, "LEAVEROOM");
-    this->m_idRoom = 0;
+    // Build leaveroom protobuff
+    std::string leaveroomSerialized;
+    chat::LeaveRoom chatLeaveRoom;
+    chatLeaveRoom.set_userid(this->m_idUser);
+    chatLeaveRoom.set_roomid(this->m_idRoom);
+
+    // Serialize and send request
+    chatLeaveRoom.SerializeToString(&leaveroomSerialized);
+    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), "leaveroom", leaveroomSerialized);
+
+    this->m_idRoom = -1;
+
     return;
 }
 
@@ -116,10 +163,13 @@ std::string ChatClient::ReceiveRoomMsg()
         return "";
     }
 
-    sPacketData newMsg = sPacketData();
-    this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), newMsg);
+    std::string dataTypeOut;
+    std::string dataOut;
+    chat::ChatMessage chatMsg;
 
-    if (newMsg.header.packetSize == 0)
+    this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), dataTypeOut, dataOut);
+
+    if (dataTypeOut == "")
     {
         // Server disconnected, so should we
         printf("Server disconnected!\n");
@@ -128,5 +178,12 @@ std::string ChatClient::ReceiveRoomMsg()
         return "";
     }
 
-    return newMsg.msg;
+    bool isDeserialized = chatMsg.ParseFromString(dataOut);
+    if (!isDeserialized)
+    {
+        printf("error parsing chat message");
+        return "";
+    }
+
+    return chatMsg.msg();
 }

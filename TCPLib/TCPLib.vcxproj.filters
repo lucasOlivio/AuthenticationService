@@ -15,16 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\TCPBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PacketTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\TCPServer.h">
@@ -33,18 +27,27 @@
     <ClInclude Include="include\TCPClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\protobuffers\packet\packet.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TCPBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TCPServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TCPClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\protobuffers\packet\packet.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

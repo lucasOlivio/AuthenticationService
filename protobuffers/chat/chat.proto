@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+package chat;
+
+message Response {
+  required bool success = 1;
+  required string msg = 2;
+}
+
+message JoinRoom {
+  required int64 userId = 1;
+  required int64 roomId = 2;
+}
+
+message LeaveRoom {
+  required int64 userId = 1;
+  required int64 roomId = 2;
+}
+
+message ChatMessage {
+  required int64 userId = 1;
+  required int64 roomId = 2;
+  required string msg = 3;
+}

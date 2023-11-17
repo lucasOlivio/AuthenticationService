@@ -120,13 +120,13 @@ void TCPServer::AddSocket()
 	}
 }
 
-void TCPServer::ReadNewMsgs(std::map<SOCKET, sPacketData>& mapNewMsgsOut)
+void TCPServer::ReadNewMsgs(std::map<SOCKET, myTcp::sPacketData>& mapNewMsgsOut)
 {
     // First use a non-blocking way to check which sockets have messages
     this->UpdateSocketsToRead();
 
     // Now loop through all the sockets with messages
-    for (int i = 0; i < this->m_activeSockets.fd_count; i++)
+    for (uint i = 0; i < this->m_activeSockets.fd_count; i++)
     {
         SOCKET socket = this->m_activeSockets.fd_array[i];
         if (!FD_ISSET(socket, &this->m_socketsToRead))
@@ -136,18 +136,18 @@ void TCPServer::ReadNewMsgs(std::map<SOCKET, sPacketData>& mapNewMsgsOut)
         }
 
         // Get the user message, along with the room id he is in
-        sPacketData* pPacketOut = new sPacketData();
-        this->ReceiveRequest(socket, *pPacketOut);
+        myTcp::sPacketData* pPacketOut = new myTcp::sPacketData();
+        bool received = this->ReceiveRequest(socket, pPacketOut->dataType, pPacketOut->data);
 
         mapNewMsgsOut[socket] = *pPacketOut;
 
-        if (pPacketOut->header.packetSize == 0)
+        FD_CLR(socket, &this->m_socketsToRead);
+
+        if (!received)
         {
             printf("Client disconnected from socket %d...\n", (int)socket);
             FD_CLR(socket, &this->m_activeSockets);
         }
-
-        FD_CLR(socket, &this->m_socketsToRead);
     }
 
     // Now if there is any messages remaining, they are to accept new connections

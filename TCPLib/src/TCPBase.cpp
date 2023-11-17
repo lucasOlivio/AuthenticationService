@@ -1,6 +1,5 @@
 #include "TCPBase.h"
-
-const uint BUFFER_SIZE = 512;
+#include "packet.pb.h"
 
 void TCPBase::m_SocketError(const char* function, SOCKET socket, bool isFatalError)
 {
@@ -24,65 +23,37 @@ void TCPBase::m_ResultError(const char* function, int result, bool isFatalError)
 	return;
 }
 
-void TCPBase::m_SerializeBuffer(const myTcp::MSG_TYPE& msgType, uint32 idRoom, const std::string& username,
-	const std::string& msg, Buffer& bufferOut)
+uint32 TCPBase::m_SerializePacket(const std::string& dataTypeIn, const std::string& dataIn, Buffer& bufferOut)
 {
-	if (!this->m_isInitialized)
-	{
-		return;
-	}
+	// Build protobuffer
+	std::string packetSerialized;
+	packet::PacketData packetData;
+	packetData.set_data(dataIn.c_str());
+	packetData.set_datatype(dataTypeIn.c_str());
+	packetSerialized = packetData.SerializeAsString();
 
-	sPacketData packet;
+	// Build prefix header
+	bufferOut.WriteUInt32LE((uint32)packetSerialized.size());
+	bufferOut.WriteString(packetSerialized);
 
-	// Build our packet
-	packet.msg = msg;
-	packet.msgLength = packet.msg.length();
-	packet.header.msgType = msgType;
-	packet.header.idRoom = idRoom;
-	packet.header.usernameLength = username.length();
-	packet.header.username = username;
-	packet.header.packetSize =
-		packet.msg.length()
-		+ sizeof(packet.msgLength)
-		+ sizeof(packet.header.msgType)
-		+ sizeof(packet.header.idRoom)
-		+ sizeof(packet.header.usernameLength)
-		+ packet.header.username.length()
-		+ sizeof(packet.header.packetSize);
-
-	// Write our packet to the buffer
-	bufferOut.WriteUInt32LE(packet.header.packetSize);
-	bufferOut.WriteUInt32LE(packet.header.msgType);
-	bufferOut.WriteUInt32LE(packet.header.idRoom);
-
-	bufferOut.WriteUInt32LE(packet.header.usernameLength);
-	bufferOut.WriteString(packet.header.username);
-
-	bufferOut.WriteUInt32LE(packet.msgLength);
-	bufferOut.WriteString(packet.msg);
-
-	return;
+	return (uint32)bufferOut.vecBufferData.size();
 }
 
-void TCPBase::m_DeserializeBuffer(Buffer& buffer, sPacketData& dataOut)
+bool TCPBase::m_DeserializePacket(const std::string& strPacketIn, std::string& dataTypeOut, std::string& dataOut)
 {
-	if (!this->m_isInitialized)
+	// Build protobuffer
+	packet::PacketData packetData;
+	bool success = packetData.ParseFromString(strPacketIn);
+
+	if (!success)
 	{
-		return;
+		return false;
 	}
 
-	// Get header
-	dataOut.header.msgType = buffer.ReadUInt32LE(0);
-	dataOut.header.idRoom = buffer.ReadUInt32LE();
+	dataTypeOut = packetData.datatype();
+	dataOut = packetData.data();
 
-	dataOut.header.usernameLength = buffer.ReadUInt32LE();
-	dataOut.header.username = buffer.ReadString(dataOut.header.usernameLength);
-
-	// Get message string
-	dataOut.msgLength = buffer.ReadUInt32LE();
-	dataOut.msg = buffer.ReadString(dataOut.msgLength);
-
-	return;
+	return true;
 }
 
 TCPBase::TCPBase()
@@ -165,19 +136,16 @@ void TCPBase::Destroy()
 	return;
 }
 
-void TCPBase::SendRequest(SOCKET& destSocket, const myTcp::MSG_TYPE& msgType, uint32 idRoom,
-							const std::string& username, const std::string& msg)
+void TCPBase::SendRequest(SOCKET& destSocket, const std::string& dataTypeIn, const std::string& dataIn)
 {
 	if (!this->m_isInitialized)
 	{
 		return;
 	}
 
+	// Build string packet to send
 	Buffer buffer(BUFFER_SIZE);
-
-	// Build buffer object to send
-	this->m_SerializeBuffer(msgType, idRoom, username, msg, buffer);
-	int packetSize = buffer.vecBufferData.size();
+	int packetSize = this->m_SerializePacket(dataTypeIn, dataIn, buffer);
 
 	// Send data and validate if succesfull
 	int result = send(destSocket, (const char*)(&buffer.vecBufferData[0]), packetSize, 0);
@@ -188,41 +156,48 @@ void TCPBase::SendRequest(SOCKET& destSocket, const myTcp::MSG_TYPE& msgType, ui
 	return;
 }
 
-void TCPBase::ReceiveRequest(SOCKET& origSocket, sPacketData& dataOut)
+bool TCPBase::ReceiveRequest(SOCKET& origSocket, std::string& dataTypeOut, std::string& dataOut)
 {
 	if (!this->m_isInitialized)
 	{
-		return;
+		return false;
 	}
 
+	std::string strPacket = "";
+	uint32 packetSize = 0;
+
 	Buffer buffer(BUFFER_SIZE);
-	dataOut.header.packetSize = 0;
 
 	// Get total packet size first to prepare buffer
-	buffer.vecBufferData.resize(sizeof(dataOut.header.packetSize));
-	int result = recv(origSocket, (char*)(&buffer.vecBufferData[0]), sizeof(dataOut.header.packetSize), 0);
+	buffer.vecBufferData.resize(sizeof(packetSize));
+	int result = recv(origSocket, (char*)(&buffer.vecBufferData[0]), sizeof(packetSize), 0);
 	if (result == SOCKET_ERROR) {
 		this->m_SocketError("recv", result, false);
-		return;
+		return false;
 	}
 	if (result == 0)
 	{
 		// User disconnected
-		return;
+		return false;
 	}
 
 	// + 1 for the /0 end of string
-	dataOut.header.packetSize = buffer.ReadUInt32LE() - sizeof(dataOut.header.packetSize) + 1;
-	// Now we can get the rest of the message, setting the buffer to the correct total packet size
-	buffer.vecBufferData.resize(dataOut.header.packetSize);
-	result = recv(origSocket, (char*)(&buffer.vecBufferData[0]), dataOut.header.packetSize, 0);
+	packetSize = buffer.ReadUInt32LE() + 1;
+	buffer.vecBufferData.resize(packetSize);
+	// Now we can get the rest of the message, with the rest total size
+	result = recv(origSocket, (char*)(&buffer.vecBufferData[0]), packetSize, 0);
 	if (result == SOCKET_ERROR) {
 		this->m_SocketError("recv", result, false);
-		return;
+		return false;
 	}
 
 	// Transform the data into our readable string
-	this->m_DeserializeBuffer(buffer, dataOut);
+	strPacket = buffer.ReadString(0, packetSize - 1);
+	bool isDeserialized = this->m_DeserializePacket(strPacket, dataTypeOut, dataOut);
+	if (!isDeserialized)
+	{
+		return false;
+	}
 
-	return;
+	return true;
 }

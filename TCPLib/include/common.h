@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 
+#define DEFAULT_PORT "8811"
+#define BUFFER_SIZE 512
+
 typedef unsigned int uint;
 typedef int int32;
 typedef short int16;
@@ -13,11 +16,9 @@ typedef unsigned char uint8;
 
 namespace myTcp
 {
-	#define DEFAULT_PORT "8811"
-	enum MSG_TYPE
+	struct sPacketData
 	{
-		ACTION,
-		CHAT_MESSAGE,
-		RESPONSE
+		std::string dataType;
+		std::string data;
 	};
 }

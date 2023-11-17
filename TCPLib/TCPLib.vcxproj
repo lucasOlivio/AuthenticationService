@@ -19,16 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\protobuffers\packet\packet.pb.h" />
     <ClInclude Include="include\Buffer.h" />
     <ClInclude Include="include\common.h" />
-    <ClInclude Include="include\PacketTypes.h" />
     <ClInclude Include="include\TCPBase.h" />
     <ClInclude Include="include\TCPClient.h" />
     <ClInclude Include="include\TCPServer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\TCPClient.cpp" />
+    <ClCompile Include="..\protobuffers\packet\packet.pb.cc" />
     <ClCompile Include="src\Buffer.cpp" />
+    <ClCompile Include="src\TCPClient.cpp" />
     <ClCompile Include="src\TCPBase.cpp" />
     <ClCompile Include="src\TCPServer.cpp" />
   </ItemGroup>
@@ -86,10 +87,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Extern\include\;$(SolutionDir)protobuffers\packet\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)protobuffers\packet\;$(SourcePath)</SourcePath>
+    <LibraryPath>$(SolutionDir)Extern\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Extern\include\;$(SolutionDir)protobuffers\packet\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)protobuffers\packet\;$(SourcePath)</SourcePath>
+    <LibraryPath>$(SolutionDir)Extern\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -140,6 +145,9 @@
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -160,6 +168,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -24,7 +24,7 @@ void Buffer::CheckSize(uint32 index, uint32 valueSize)
 
     // Allocates enough space for all the value
     this->vecBufferData.resize(endIndex + 1, 0);
-    
+
     return;
 }
 
@@ -76,9 +76,9 @@ void Buffer::WriteUInt16LE(uint16 value)
 
 void Buffer::WriteString(uint32 index, const std::string& value)
 {
-    this->CheckSize(index, value.length());
+    this->CheckSize(index, (uint32)value.length());
 
-    int indexEnd = index + value.length();
+    int indexEnd = index + (uint32)value.length();
     // Set char by char from the string to the buffer data
     for (int i = index; i < indexEnd; i++)
     {
@@ -88,9 +88,9 @@ void Buffer::WriteString(uint32 index, const std::string& value)
 
 void Buffer::WriteString(const std::string& value)
 {
-    this->CheckSize(this->m_writeIndex, value.length());
+    this->CheckSize(this->m_writeIndex, (uint32)value.length());
 
-    int strLength = value.length();
+    int strLength = (int)value.length();
     // Set char by char from the string to the buffer data
     for (int i = 0; i < strLength; i++)
     {
@@ -104,7 +104,7 @@ uint32 Buffer::ReadUInt32LE(uint32 index)
         // Index already at the end
         return 0;
     }
-   
+
     uint32 res = this->vecBufferData[index];
     this->m_readIndex = index;
     unsigned int endIndex = this->m_readIndex + sizeof(res);
@@ -183,7 +183,7 @@ std::string Buffer::ReadString(uint32 index, uint32 strLength)
     }
 
     std::string str;
-    for (int i = 0; i < strLength; i++)
+    for (uint32 i = 0; i < strLength; i++)
     {
         str.push_back(this->vecBufferData[index++]);
     }
@@ -198,7 +198,7 @@ std::string Buffer::ReadString(uint32 strLength)
     }
 
     std::string str;
-    for (int i = 0; i < strLength; i++)
+    for (uint32 i = 0; i < strLength; i++)
     {
         str.push_back(this->vecBufferData[this->m_readIndex++]);
     }

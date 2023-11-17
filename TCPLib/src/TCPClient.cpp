@@ -4,7 +4,7 @@ TCPClient::TCPClient()
 {
     // For clients we can't stay waiting new msgs for too long
     this->m_tv.tv_sec = 0;
-    this->m_tv.tv_usec = 0.1;
+    this->m_tv.tv_usec = (long)0.1;
 }
 
 TCPClient::~TCPClient()

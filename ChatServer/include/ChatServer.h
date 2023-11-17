@@ -7,7 +7,7 @@ class ChatServer
 {
 private:
 	// Mapping to the rooms we have and the clients in each one
-	std::map<uint32 /* idRoom */, std::map<std::string /*username*/, SOCKET>> m_mapRoomClients;
+	std::map<int /* idRoom */, std::map<int /*idUser*/, SOCKET>> m_mapRoomClients;
 
 	// Our custom protocol
 	TCPServer* m_pTCP;
@@ -22,22 +22,19 @@ public:
 
 	void Destroy();
 
-	bool IsRoomCreated(uint32 idRoom);
-
-	// Check if this username is not already been used in this room
-	bool IsUsernameAvailable(uint32 idRoom, const std::string& clientSocket);
+	bool IsRoomCreated(int idRoom);
 
 	// Go through each room to check the socket
-	void GetRoomAndUsernameBySocket(SOCKET& client, uint32& idRoomOut, std::string& usernameOut);
+	void GetRoomAndIdUserBySocket(SOCKET& client, int& idRoomOut, int& idUserOut);
 
 	// Add client socket to room id key
-	void AddClientToRoom(uint32 idRoom, const std::string& username, SOCKET& client);
+	void AddClientToRoom(int idRoom, const int& idUser, SOCKET& client);
 
 	// Remove client socket from room id key
-	void RemoveClientFromRoom(uint32 idRoom, const std::string& username);
+	void RemoveClientFromRoom(int idRoom, const int& idUser);
 
 	// Send the given message to all clients inside the given room
-	void BroadcastToRoom(uint32 idRoom, std::string username, const std::string& msg);
+	void BroadcastToRoom(int idRoom, int idUser, const std::string& msg);
 
 	// Get which clients sent message and decide what to do with it based on the message type:
 	// ACTION will execute a server function.

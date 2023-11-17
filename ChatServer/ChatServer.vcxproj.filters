@@ -18,12 +18,18 @@
     <ClInclude Include="include\ChatServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\protobuffers\chat\chat.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChatServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\protobuffers\chat\chat.pb.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

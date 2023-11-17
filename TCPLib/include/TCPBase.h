@@ -3,7 +3,6 @@
 // WinSock2 Windows Sockets
 #define WIN32_LEAN_AND_MEAN
 
-#include "PacketTypes.h"
 #include "common.h"
 #include "Buffer.h"
 #include <Windows.h>
@@ -26,13 +25,11 @@ protected:
     // Deals with any results error responses from WSA
     void m_ResultError(const char* function, int result, bool isFatalError);
 
-    // Serializes message into buffer, accordingly to the message type (0 - action, 1 - chat message)
-    void m_SerializeBuffer(const myTcp::MSG_TYPE& msgType, uint32 idRoom, const std::string& username,
-        const std::string& msg, Buffer& bufferOut);
+    // Serializes protobuffer packet into string packet, include length prefix header, and returns the packet total size
+    uint32 m_SerializePacket(const std::string& dataTypeIn, const std::string& dataIn, Buffer& bufferOut);
 
-    // Deserialize message from buffer returning the message type and string
-    // returns: the packet size
-    void m_DeserializeBuffer(Buffer& buffer, sPacketData& dataOut);
+    // Deserialize message from string to protobuffer packet
+    bool m_DeserializePacket(const std::string& strPacketIn, std::string& dataTypeOut, std::string& dataOut);
 
     // All wsa is initialized and socket created
     bool m_isInitialized;
@@ -51,10 +48,8 @@ public:
     void Destroy();
 
     // Serializes and send message to the destination socket
-    void SendRequest(SOCKET& destSocket, const myTcp::MSG_TYPE& msgType, uint32 idRoom, 
-                        const std::string& username, const std::string& msg);
+    void SendRequest(SOCKET& destSocket, const std::string& dataTypeIn, const std::string& dataIn);
 
     // Deserializes message received from socket and returns the message type and string
-    // returns: the packet size
-    void ReceiveRequest(SOCKET& origSocket, sPacketData& dataOut);
+    bool ReceiveRequest(SOCKET& origSocket, std::string& dataTypeOut, std::string& dataOut);
 };

@@ -84,7 +84,7 @@ void ChatDemo::OutRoomScene()
 	std::cin >> username;
 
 	// Try to enter room with this username
-	if (!this->m_pChat->JoinRoom(idRoom, username, errorMsg))
+	if (!this->m_pChat->JoinRoom(idRoom, errorMsg))
 	{
 		// couldn't join
 		printf("Could not join room: %s\n\n", errorMsg.c_str());

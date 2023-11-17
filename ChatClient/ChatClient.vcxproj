@@ -71,12 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)TCPLib\include\;$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)TCPLib\include\;$(ProjectDir)include;$(SolutionDir)protobuffers\chat\;$(SolutionDir)Extern\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)x64\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SolutionDir)protobuffers\chat\;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)TCPLib\include\;$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)TCPLib\include\;$(ProjectDir)include;$(SolutionDir)protobuffers\chat\;$(SolutionDir)Extern\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)x64\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SolutionDir)protobuffers\chat\;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,10 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\protobuffers\chat\chat.pb.h" />
     <ClInclude Include="include\ChatClient.h" />
     <ClInclude Include="include\ChatDemo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\protobuffers\chat\chat.pb.cc" />
     <ClCompile Include="src\ChatDemo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\ChatClient.cpp" />

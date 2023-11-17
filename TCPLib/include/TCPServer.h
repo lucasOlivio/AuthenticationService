@@ -31,5 +31,5 @@ public:
 	void AddSocket();
 
 	// Read all messages waiting on the sockets and insert in the output map
-	void ReadNewMsgs(std::map<SOCKET, sPacketData>& mapNewMsgsOut);
+	void ReadNewMsgs(std::map<SOCKET, myTcp::sPacketData>& mapNewMsgsOut);
 };
