@@ -1,0 +1,47 @@
+// authentication.proto
+
+syntax = "proto3";
+
+package authentication;
+
+message CreateAccountWeb {
+  int64 requestId = 1;
+  string email = 2;
+  string plaintextPassword = 3;
+}
+
+message CreateAccountWebSuccess {
+  int64 requestId = 1;
+  int64 userId = 2;
+}
+
+message CreateAccountWebFailure {
+  int64 requestId = 1;
+  enum Reason {
+    ACCOUNT_ALREADY_EXISTS = 0;
+    INVALID_PASSWORD = 1;
+    INTERNAL_SERVER_ERROR = 2;
+  }
+  Reason reason = 2;
+}
+
+message AuthenticateWeb {
+  int64 requestId = 1;
+  string email = 2;
+  string plaintextPassword = 3;
+}
+
+message AuthenticateWebSuccess {
+  int64 requestId = 1;
+  int64 userId = 2;
+  string creationDate = 3;
+}
+
+message AuthenticateWebFailure {
+  int64 requestId = 1;
+  enum Reason {
+    INVALID_CREDENTIALS = 0;
+    INTERNAL_SERVER_ERROR = 1;
+  }
+  Reason reason = 2;
+}
