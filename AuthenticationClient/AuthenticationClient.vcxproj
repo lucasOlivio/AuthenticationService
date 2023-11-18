@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\protobuffers\authentication\authentication.pb.cc" />
+    <ClCompile Include="src\AuthenticationClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\protobuffers\authentication\authentication.pb.h" />
+    <ClInclude Include="include\AuthenticationClient.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

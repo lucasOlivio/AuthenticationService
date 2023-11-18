@@ -2,6 +2,8 @@
 
 #include "TCPClient.h"
 
+#define CHAT_PORT "8811"
+
 class ChatClient : public TCPClient
 {
 private:

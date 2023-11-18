@@ -13,7 +13,7 @@ TCPClient::~TCPClient()
 
 bool TCPClient::Initialize(const char* host, const char* port)
 {
-    bool TCPInitialized = TCPBase::Initialize(host, port);
+    bool TCPInitialized = this->TCPBase::Initialize(host, port);
     if (!TCPInitialized)
     {
         // Error initializing sockets

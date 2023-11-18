@@ -11,7 +11,7 @@ int main()
 {
 	AuthenticationServer server = AuthenticationServer();
 
-	bool initialized = server.Initialize(NULL, DEFAULT_PORT, DB_HOST, DB_USER, DB_PASS, DB_SCHEMA);
+	bool initialized = server.Initialize(NULL, AUTH_PORT, DB_HOST, DB_USER, DB_PASS, DB_SCHEMA);
 
 	if (!initialized)
 	{
@@ -23,7 +23,7 @@ int main()
 	printf("Press ESC to close\n");
 	while (true)
 	{
-		// server.ExecuteIncommingMsgs();
+		server.ExecuteIncommingMsgs();
 
 		if (_kbhit())
 		{

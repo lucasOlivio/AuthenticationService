@@ -1,13 +1,35 @@
 #include "ChatServer.h"
 #include "chat.pb.h"
 
-ChatServer::ChatServer()
+ChatServer::ChatServer() : 
+    m_mapRoomClients({}),
+    m_pAuthClient(nullptr)
 {
-    this->m_mapRoomClients = {};
 }
 
 ChatServer::~ChatServer()
 {
+}
+
+bool ChatServer::Initialize(const char* hostServer, const char* portServer, const char* hostAuth, const char* portAuth)
+{
+    bool isTcpInit = this->TCPServer::Initialize(hostServer, portServer);
+    if (!isTcpInit)
+    {
+        printf("failed to initialize tcp server\n");
+        return false;
+    }
+
+    m_pAuthClient = new AuthenticationClient();
+    bool isAuthInit = m_pAuthClient->Initialize(hostAuth, portAuth);
+    if (!isAuthInit)
+    {
+        printf("failed to initialize auth client\n");
+        this->Destroy();
+        return false;
+    }
+
+    return true;
 }
 
 bool ChatServer::IsRoomCreated(int idRoom)
@@ -194,4 +216,9 @@ void ChatServer::ExecuteIncommingMsgs()
             continue;
         }
     }
+}
+
+void ChatServer::GetAuthResponses()
+{
+    
 }

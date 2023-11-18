@@ -2,7 +2,6 @@
 #include <iostream>
 #include <conio.h>
 
-const char* DEFAULT_HOST = "127.0.0.1";
 const uint32 MIN_ROOM_ID = 1;
 const uint32 MAX_ROOM_ID = 255;
 
@@ -20,7 +19,7 @@ ChatDemo::~ChatDemo()
 bool ChatDemo::Initialize()
 {
 	this->m_pChat = new ChatClient();
-	bool initialized = m_pChat->Initialize(DEFAULT_HOST, DEFAULT_PORT);
+	bool initialized = m_pChat->Initialize(LOCALHOST, CHAT_PORT);
 
 	if (!initialized)
 	{

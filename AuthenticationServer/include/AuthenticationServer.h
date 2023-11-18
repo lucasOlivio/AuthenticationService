@@ -3,6 +3,8 @@
 #include "TCPServer.h"
 #include "mysqlutil.h"
 
+#define AUTH_PORT "8812"
+
 class AuthenticationServer : TCPServer
 {
 	enum class StatementType

@@ -1,17 +1,26 @@
 #pragma once
 
 #include "TCPServer.h"
+#include "AuthenticationClient.h"
 #include <map>
+
+#define CHAT_PORT "8811"
 
 class ChatServer : public TCPServer
 {
 private:
+	AuthenticationClient* m_pAuthClient;
+
 	// Mapping to the rooms we have and the clients in each one
 	std::map<int /* idRoom */, std::map<int /*idUser*/, SOCKET>> m_mapRoomClients;
 
 public:
 	ChatServer();
 	virtual ~ChatServer();
+
+	// Initialize tcp and auth client
+	virtual bool Initialize(const char* hostServer, const char* portServer,
+							const char* hostAuth, const char* portAuth);
 
 	bool IsRoomCreated(int idRoom);
 
@@ -29,4 +38,7 @@ public:
 
 	// Get which clients sent message and decide what to do with it based on the message type
 	void ExecuteIncommingMsgs();
+
+	// Deal with authentication responses
+	void GetAuthResponses();
 };

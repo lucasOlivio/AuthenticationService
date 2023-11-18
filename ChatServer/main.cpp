@@ -5,7 +5,7 @@ int main()
 {
 	ChatServer server = ChatServer();
 
-	bool initialized = server.Initialize(NULL, DEFAULT_PORT);
+	bool initialized = server.Initialize(NULL, CHAT_PORT, LOCALHOST, AUTH_PORT);
 
 	if (!initialized)
 	{

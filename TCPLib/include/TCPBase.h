@@ -3,6 +3,8 @@
 // WinSock2 Windows Sockets
 #define WIN32_LEAN_AND_MEAN
 
+#define LOCALHOST "127.0.0.1"
+
 #include "common.h"
 #include "Buffer.h"
 #include <Windows.h>

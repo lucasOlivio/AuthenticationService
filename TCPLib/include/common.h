@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 
-#define DEFAULT_PORT "8811"
 #define BUFFER_SIZE 512
 
 typedef unsigned int uint;
