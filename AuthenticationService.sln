@@ -5,29 +5,26 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AuthenticationServer", "AuthenticationServer\AuthenticationServer.vcxproj", "{05567455-72EF-4825-9D66-492799A073C0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF} = {91917544-2872-4D86-BDFC-BCBDBE3AF2AF}
+		{12592CA0-DB41-4A0F-95BA-D8A461047E6B} = {12592CA0-DB41-4A0F-95BA-D8A461047E6B}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPLib", "TCPLib\TCPLib.vcxproj", "{12592CA0-DB41-4A0F-95BA-D8A461047E6B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatServer", "ChatServer\ChatServer.vcxproj", "{330DCE94-68A5-4812-AAC5-47BCF5492A20}"
 	ProjectSection(ProjectDependencies) = postProject
-		{05567455-72EF-4825-9D66-492799A073C0} = {05567455-72EF-4825-9D66-492799A073C0}
 		{12592CA0-DB41-4A0F-95BA-D8A461047E6B} = {12592CA0-DB41-4A0F-95BA-D8A461047E6B}
+		{7084500A-7D96-4858-8B26-B5AD6C41AB54} = {7084500A-7D96-4858-8B26-B5AD6C41AB54}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatClient", "ChatClient\ChatClient.vcxproj", "{D04F4336-42DF-4FA9-9693-DDC2B6467BEF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{12592CA0-DB41-4A0F-95BA-D8A461047E6B} = {12592CA0-DB41-4A0F-95BA-D8A461047E6B}
-		{7084500A-7D96-4858-8B26-B5AD6C41AB54} = {7084500A-7D96-4858-8B26-B5AD6C41AB54}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AuthenticationClient", "AuthenticationClient\AuthenticationClient.vcxproj", "{7084500A-7D96-4858-8B26-B5AD6C41AB54}"
 	ProjectSection(ProjectDependencies) = postProject
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF} = {91917544-2872-4D86-BDFC-BCBDBE3AF2AF}
+		{12592CA0-DB41-4A0F-95BA-D8A461047E6B} = {12592CA0-DB41-4A0F-95BA-D8A461047E6B}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AuthenticationProtocol", "AuthenticationProtocol\AuthenticationProtocol.vcxproj", "{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,14 +74,6 @@ Global
 		{7084500A-7D96-4858-8B26-B5AD6C41AB54}.Release|x64.Build.0 = Release|x64
 		{7084500A-7D96-4858-8B26-B5AD6C41AB54}.Release|x86.ActiveCfg = Release|Win32
 		{7084500A-7D96-4858-8B26-B5AD6C41AB54}.Release|x86.Build.0 = Release|Win32
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Debug|x64.ActiveCfg = Debug|x64
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Debug|x64.Build.0 = Debug|x64
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Debug|x86.ActiveCfg = Debug|Win32
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Debug|x86.Build.0 = Debug|Win32
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Release|x64.ActiveCfg = Release|x64
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Release|x64.Build.0 = Release|x64
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Release|x86.ActiveCfg = Release|Win32
-		{91917544-2872-4D86-BDFC-BCBDBE3AF2AF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

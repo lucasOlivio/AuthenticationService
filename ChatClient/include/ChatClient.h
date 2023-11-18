@@ -2,23 +2,18 @@
 
 #include "TCPClient.h"
 
-class ChatClient
+class ChatClient : public TCPClient
 {
 private:
 	int m_idRoom;
 	int m_idUser;
 
-	bool m_isInitialized;
-
 public:
-	TCPClient* m_pTCP;
-
 	// ctors & dtors
 	ChatClient();
-	~ChatClient();
+	virtual ~ChatClient();
 
-	bool Initialize(const char* host, const char* port);
-	void Destroy();
+	virtual void Destroy();
 
 	// Check if user is in any room
 	bool IsInRoom();

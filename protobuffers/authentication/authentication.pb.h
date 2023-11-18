@@ -87,9 +87,7 @@ namespace authentication {
 enum CreateAccountWebFailure_Reason : int {
   CreateAccountWebFailure_Reason_ACCOUNT_ALREADY_EXISTS = 0,
   CreateAccountWebFailure_Reason_INVALID_PASSWORD = 1,
-  CreateAccountWebFailure_Reason_INTERNAL_SERVER_ERROR = 2,
-  CreateAccountWebFailure_Reason_CreateAccountWebFailure_Reason_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  CreateAccountWebFailure_Reason_CreateAccountWebFailure_Reason_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+  CreateAccountWebFailure_Reason_INTERNAL_SERVER_ERROR = 2
 };
 bool CreateAccountWebFailure_Reason_IsValid(int value);
 constexpr CreateAccountWebFailure_Reason CreateAccountWebFailure_Reason_Reason_MIN = CreateAccountWebFailure_Reason_ACCOUNT_ALREADY_EXISTS;
@@ -112,9 +110,7 @@ inline bool CreateAccountWebFailure_Reason_Parse(
 }
 enum AuthenticateWebFailure_Reason : int {
   AuthenticateWebFailure_Reason_INVALID_CREDENTIALS = 0,
-  AuthenticateWebFailure_Reason_INTERNAL_SERVER_ERROR = 1,
-  AuthenticateWebFailure_Reason_AuthenticateWebFailure_Reason_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  AuthenticateWebFailure_Reason_AuthenticateWebFailure_Reason_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+  AuthenticateWebFailure_Reason_INTERNAL_SERVER_ERROR = 1
 };
 bool AuthenticateWebFailure_Reason_IsValid(int value);
 constexpr AuthenticateWebFailure_Reason AuthenticateWebFailure_Reason_Reason_MIN = AuthenticateWebFailure_Reason_INVALID_CREDENTIALS;
@@ -166,6 +162,13 @@ class CreateAccountWeb final :
       CopyFrom(from);
     }
     return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
   }
 
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
@@ -260,7 +263,11 @@ class CreateAccountWeb final :
     kPlaintextPasswordFieldNumber = 3,
     kRequestIdFieldNumber = 1,
   };
-  // string email = 2;
+  // required string email = 2;
+  bool has_email() const;
+  private:
+  bool _internal_has_email() const;
+  public:
   void clear_email();
   const std::string& email() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -274,7 +281,11 @@ class CreateAccountWeb final :
   std::string* _internal_mutable_email();
   public:
 
-  // string plaintextPassword = 3;
+  // required string plaintextPassword = 3;
+  bool has_plaintextpassword() const;
+  private:
+  bool _internal_has_plaintextpassword() const;
+  public:
   void clear_plaintextpassword();
   const std::string& plaintextpassword() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -288,7 +299,11 @@ class CreateAccountWeb final :
   std::string* _internal_mutable_plaintextpassword();
   public:
 
-  // int64 requestId = 1;
+  // required int64 requestId = 1;
+  bool has_requestid() const;
+  private:
+  bool _internal_has_requestid() const;
+  public:
   void clear_requestid();
   ::PROTOBUF_NAMESPACE_ID::int64 requestid() const;
   void set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -301,13 +316,17 @@ class CreateAccountWeb final :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr email_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr plaintextpassword_;
   ::PROTOBUF_NAMESPACE_ID::int64 requestid_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_authentication_2eproto;
 };
 // -------------------------------------------------------------------
@@ -341,6 +360,13 @@ class CreateAccountWebSuccess final :
       CopyFrom(from);
     }
     return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
   }
 
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
@@ -434,7 +460,11 @@ class CreateAccountWebSuccess final :
     kRequestIdFieldNumber = 1,
     kUserIdFieldNumber = 2,
   };
-  // int64 requestId = 1;
+  // required int64 requestId = 1;
+  bool has_requestid() const;
+  private:
+  bool _internal_has_requestid() const;
+  public:
   void clear_requestid();
   ::PROTOBUF_NAMESPACE_ID::int64 requestid() const;
   void set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -443,7 +473,11 @@ class CreateAccountWebSuccess final :
   void _internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // int64 userId = 2;
+  // required int64 userId = 2;
+  bool has_userid() const;
+  private:
+  bool _internal_has_userid() const;
+  public:
   void clear_userid();
   ::PROTOBUF_NAMESPACE_ID::int64 userid() const;
   void set_userid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -456,12 +490,16 @@ class CreateAccountWebSuccess final :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::int64 requestid_;
   ::PROTOBUF_NAMESPACE_ID::int64 userid_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_authentication_2eproto;
 };
 // -------------------------------------------------------------------
@@ -495,6 +533,13 @@ class CreateAccountWebFailure final :
       CopyFrom(from);
     }
     return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
   }
 
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
@@ -620,7 +665,11 @@ class CreateAccountWebFailure final :
     kRequestIdFieldNumber = 1,
     kReasonFieldNumber = 2,
   };
-  // int64 requestId = 1;
+  // required int64 requestId = 1;
+  bool has_requestid() const;
+  private:
+  bool _internal_has_requestid() const;
+  public:
   void clear_requestid();
   ::PROTOBUF_NAMESPACE_ID::int64 requestid() const;
   void set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -629,7 +678,11 @@ class CreateAccountWebFailure final :
   void _internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // .authentication.CreateAccountWebFailure.Reason reason = 2;
+  // required .authentication.CreateAccountWebFailure.Reason reason = 2;
+  bool has_reason() const;
+  private:
+  bool _internal_has_reason() const;
+  public:
   void clear_reason();
   ::authentication::CreateAccountWebFailure_Reason reason() const;
   void set_reason(::authentication::CreateAccountWebFailure_Reason value);
@@ -642,12 +695,16 @@ class CreateAccountWebFailure final :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::int64 requestid_;
   int reason_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_authentication_2eproto;
 };
 // -------------------------------------------------------------------
@@ -681,6 +738,13 @@ class AuthenticateWeb final :
       CopyFrom(from);
     }
     return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
   }
 
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
@@ -775,7 +839,11 @@ class AuthenticateWeb final :
     kPlaintextPasswordFieldNumber = 3,
     kRequestIdFieldNumber = 1,
   };
-  // string email = 2;
+  // required string email = 2;
+  bool has_email() const;
+  private:
+  bool _internal_has_email() const;
+  public:
   void clear_email();
   const std::string& email() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -789,7 +857,11 @@ class AuthenticateWeb final :
   std::string* _internal_mutable_email();
   public:
 
-  // string plaintextPassword = 3;
+  // required string plaintextPassword = 3;
+  bool has_plaintextpassword() const;
+  private:
+  bool _internal_has_plaintextpassword() const;
+  public:
   void clear_plaintextpassword();
   const std::string& plaintextpassword() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -803,7 +875,11 @@ class AuthenticateWeb final :
   std::string* _internal_mutable_plaintextpassword();
   public:
 
-  // int64 requestId = 1;
+  // required int64 requestId = 1;
+  bool has_requestid() const;
+  private:
+  bool _internal_has_requestid() const;
+  public:
   void clear_requestid();
   ::PROTOBUF_NAMESPACE_ID::int64 requestid() const;
   void set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -816,13 +892,17 @@ class AuthenticateWeb final :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr email_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr plaintextpassword_;
   ::PROTOBUF_NAMESPACE_ID::int64 requestid_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_authentication_2eproto;
 };
 // -------------------------------------------------------------------
@@ -856,6 +936,13 @@ class AuthenticateWebSuccess final :
       CopyFrom(from);
     }
     return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
   }
 
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
@@ -950,7 +1037,11 @@ class AuthenticateWebSuccess final :
     kRequestIdFieldNumber = 1,
     kUserIdFieldNumber = 2,
   };
-  // string creationDate = 3;
+  // required string creationDate = 3;
+  bool has_creationdate() const;
+  private:
+  bool _internal_has_creationdate() const;
+  public:
   void clear_creationdate();
   const std::string& creationdate() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -964,7 +1055,11 @@ class AuthenticateWebSuccess final :
   std::string* _internal_mutable_creationdate();
   public:
 
-  // int64 requestId = 1;
+  // required int64 requestId = 1;
+  bool has_requestid() const;
+  private:
+  bool _internal_has_requestid() const;
+  public:
   void clear_requestid();
   ::PROTOBUF_NAMESPACE_ID::int64 requestid() const;
   void set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -973,7 +1068,11 @@ class AuthenticateWebSuccess final :
   void _internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // int64 userId = 2;
+  // required int64 userId = 2;
+  bool has_userid() const;
+  private:
+  bool _internal_has_userid() const;
+  public:
   void clear_userid();
   ::PROTOBUF_NAMESPACE_ID::int64 userid() const;
   void set_userid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -986,13 +1085,17 @@ class AuthenticateWebSuccess final :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr creationdate_;
   ::PROTOBUF_NAMESPACE_ID::int64 requestid_;
   ::PROTOBUF_NAMESPACE_ID::int64 userid_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_authentication_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1026,6 +1129,13 @@ class AuthenticateWebFailure final :
       CopyFrom(from);
     }
     return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
   }
 
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
@@ -1149,7 +1259,11 @@ class AuthenticateWebFailure final :
     kRequestIdFieldNumber = 1,
     kReasonFieldNumber = 2,
   };
-  // int64 requestId = 1;
+  // required int64 requestId = 1;
+  bool has_requestid() const;
+  private:
+  bool _internal_has_requestid() const;
+  public:
   void clear_requestid();
   ::PROTOBUF_NAMESPACE_ID::int64 requestid() const;
   void set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -1158,7 +1272,11 @@ class AuthenticateWebFailure final :
   void _internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // .authentication.AuthenticateWebFailure.Reason reason = 2;
+  // required .authentication.AuthenticateWebFailure.Reason reason = 2;
+  bool has_reason() const;
+  private:
+  bool _internal_has_reason() const;
+  public:
   void clear_reason();
   ::authentication::AuthenticateWebFailure_Reason reason() const;
   void set_reason(::authentication::AuthenticateWebFailure_Reason value);
@@ -1171,12 +1289,16 @@ class AuthenticateWebFailure final :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::int64 requestid_;
   int reason_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_authentication_2eproto;
 };
 // ===================================================================
@@ -1190,9 +1312,17 @@ class AuthenticateWebFailure final :
 #endif  // __GNUC__
 // CreateAccountWeb
 
-// int64 requestId = 1;
+// required int64 requestId = 1;
+inline bool CreateAccountWeb::_internal_has_requestid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool CreateAccountWeb::has_requestid() const {
+  return _internal_has_requestid();
+}
 inline void CreateAccountWeb::clear_requestid() {
   requestid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWeb::_internal_requestid() const {
   return requestid_;
@@ -1202,7 +1332,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWeb::requestid() const {
   return _internal_requestid();
 }
 inline void CreateAccountWeb::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000004u;
   requestid_ = value;
 }
 inline void CreateAccountWeb::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1210,9 +1340,17 @@ inline void CreateAccountWeb::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value
   // @@protoc_insertion_point(field_set:authentication.CreateAccountWeb.requestId)
 }
 
-// string email = 2;
+// required string email = 2;
+inline bool CreateAccountWeb::_internal_has_email() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CreateAccountWeb::has_email() const {
+  return _internal_has_email();
+}
 inline void CreateAccountWeb::clear_email() {
   email_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& CreateAccountWeb::email() const {
   // @@protoc_insertion_point(field_get:authentication.CreateAccountWeb.email)
@@ -1221,7 +1359,7 @@ inline const std::string& CreateAccountWeb::email() const {
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void CreateAccountWeb::set_email(ArgT0&& arg0, ArgT... args) {
- 
+ _has_bits_[0] |= 0x00000001u;
  email_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:authentication.CreateAccountWeb.email)
 }
@@ -1234,31 +1372,43 @@ inline const std::string& CreateAccountWeb::_internal_email() const {
   return email_.Get();
 }
 inline void CreateAccountWeb::_internal_set_email(const std::string& value) {
-  
+  _has_bits_[0] |= 0x00000001u;
   email_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
 inline std::string* CreateAccountWeb::_internal_mutable_email() {
-  
+  _has_bits_[0] |= 0x00000001u;
   return email_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* CreateAccountWeb::release_email() {
   // @@protoc_insertion_point(field_release:authentication.CreateAccountWeb.email)
-  return email_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+  if (!_internal_has_email()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return email_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
 inline void CreateAccountWeb::set_allocated_email(std::string* email) {
   if (email != nullptr) {
-    
+    _has_bits_[0] |= 0x00000001u;
   } else {
-    
+    _has_bits_[0] &= ~0x00000001u;
   }
   email_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), email,
       GetArenaForAllocation());
   // @@protoc_insertion_point(field_set_allocated:authentication.CreateAccountWeb.email)
 }
 
-// string plaintextPassword = 3;
+// required string plaintextPassword = 3;
+inline bool CreateAccountWeb::_internal_has_plaintextpassword() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CreateAccountWeb::has_plaintextpassword() const {
+  return _internal_has_plaintextpassword();
+}
 inline void CreateAccountWeb::clear_plaintextpassword() {
   plaintextpassword_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline const std::string& CreateAccountWeb::plaintextpassword() const {
   // @@protoc_insertion_point(field_get:authentication.CreateAccountWeb.plaintextPassword)
@@ -1267,7 +1417,7 @@ inline const std::string& CreateAccountWeb::plaintextpassword() const {
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void CreateAccountWeb::set_plaintextpassword(ArgT0&& arg0, ArgT... args) {
- 
+ _has_bits_[0] |= 0x00000002u;
  plaintextpassword_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:authentication.CreateAccountWeb.plaintextPassword)
 }
@@ -1280,22 +1430,26 @@ inline const std::string& CreateAccountWeb::_internal_plaintextpassword() const 
   return plaintextpassword_.Get();
 }
 inline void CreateAccountWeb::_internal_set_plaintextpassword(const std::string& value) {
-  
+  _has_bits_[0] |= 0x00000002u;
   plaintextpassword_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
 inline std::string* CreateAccountWeb::_internal_mutable_plaintextpassword() {
-  
+  _has_bits_[0] |= 0x00000002u;
   return plaintextpassword_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* CreateAccountWeb::release_plaintextpassword() {
   // @@protoc_insertion_point(field_release:authentication.CreateAccountWeb.plaintextPassword)
-  return plaintextpassword_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+  if (!_internal_has_plaintextpassword()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return plaintextpassword_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
 inline void CreateAccountWeb::set_allocated_plaintextpassword(std::string* plaintextpassword) {
   if (plaintextpassword != nullptr) {
-    
+    _has_bits_[0] |= 0x00000002u;
   } else {
-    
+    _has_bits_[0] &= ~0x00000002u;
   }
   plaintextpassword_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), plaintextpassword,
       GetArenaForAllocation());
@@ -1306,9 +1460,17 @@ inline void CreateAccountWeb::set_allocated_plaintextpassword(std::string* plain
 
 // CreateAccountWebSuccess
 
-// int64 requestId = 1;
+// required int64 requestId = 1;
+inline bool CreateAccountWebSuccess::_internal_has_requestid() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CreateAccountWebSuccess::has_requestid() const {
+  return _internal_has_requestid();
+}
 inline void CreateAccountWebSuccess::clear_requestid() {
   requestid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::_internal_requestid() const {
   return requestid_;
@@ -1318,7 +1480,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::requestid() const
   return _internal_requestid();
 }
 inline void CreateAccountWebSuccess::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000001u;
   requestid_ = value;
 }
 inline void CreateAccountWebSuccess::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1326,9 +1488,17 @@ inline void CreateAccountWebSuccess::set_requestid(::PROTOBUF_NAMESPACE_ID::int6
   // @@protoc_insertion_point(field_set:authentication.CreateAccountWebSuccess.requestId)
 }
 
-// int64 userId = 2;
+// required int64 userId = 2;
+inline bool CreateAccountWebSuccess::_internal_has_userid() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CreateAccountWebSuccess::has_userid() const {
+  return _internal_has_userid();
+}
 inline void CreateAccountWebSuccess::clear_userid() {
   userid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::_internal_userid() const {
   return userid_;
@@ -1338,7 +1508,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::userid() const {
   return _internal_userid();
 }
 inline void CreateAccountWebSuccess::_internal_set_userid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000002u;
   userid_ = value;
 }
 inline void CreateAccountWebSuccess::set_userid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1350,9 +1520,17 @@ inline void CreateAccountWebSuccess::set_userid(::PROTOBUF_NAMESPACE_ID::int64 v
 
 // CreateAccountWebFailure
 
-// int64 requestId = 1;
+// required int64 requestId = 1;
+inline bool CreateAccountWebFailure::_internal_has_requestid() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CreateAccountWebFailure::has_requestid() const {
+  return _internal_has_requestid();
+}
 inline void CreateAccountWebFailure::clear_requestid() {
   requestid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebFailure::_internal_requestid() const {
   return requestid_;
@@ -1362,7 +1540,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebFailure::requestid() const
   return _internal_requestid();
 }
 inline void CreateAccountWebFailure::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000001u;
   requestid_ = value;
 }
 inline void CreateAccountWebFailure::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1370,9 +1548,17 @@ inline void CreateAccountWebFailure::set_requestid(::PROTOBUF_NAMESPACE_ID::int6
   // @@protoc_insertion_point(field_set:authentication.CreateAccountWebFailure.requestId)
 }
 
-// .authentication.CreateAccountWebFailure.Reason reason = 2;
+// required .authentication.CreateAccountWebFailure.Reason reason = 2;
+inline bool CreateAccountWebFailure::_internal_has_reason() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CreateAccountWebFailure::has_reason() const {
+  return _internal_has_reason();
+}
 inline void CreateAccountWebFailure::clear_reason() {
   reason_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::authentication::CreateAccountWebFailure_Reason CreateAccountWebFailure::_internal_reason() const {
   return static_cast< ::authentication::CreateAccountWebFailure_Reason >(reason_);
@@ -1382,7 +1568,8 @@ inline ::authentication::CreateAccountWebFailure_Reason CreateAccountWebFailure:
   return _internal_reason();
 }
 inline void CreateAccountWebFailure::_internal_set_reason(::authentication::CreateAccountWebFailure_Reason value) {
-  
+  assert(::authentication::CreateAccountWebFailure_Reason_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
   reason_ = value;
 }
 inline void CreateAccountWebFailure::set_reason(::authentication::CreateAccountWebFailure_Reason value) {
@@ -1394,9 +1581,17 @@ inline void CreateAccountWebFailure::set_reason(::authentication::CreateAccountW
 
 // AuthenticateWeb
 
-// int64 requestId = 1;
+// required int64 requestId = 1;
+inline bool AuthenticateWeb::_internal_has_requestid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool AuthenticateWeb::has_requestid() const {
+  return _internal_has_requestid();
+}
 inline void AuthenticateWeb::clear_requestid() {
   requestid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWeb::_internal_requestid() const {
   return requestid_;
@@ -1406,7 +1601,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWeb::requestid() const {
   return _internal_requestid();
 }
 inline void AuthenticateWeb::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000004u;
   requestid_ = value;
 }
 inline void AuthenticateWeb::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1414,9 +1609,17 @@ inline void AuthenticateWeb::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value)
   // @@protoc_insertion_point(field_set:authentication.AuthenticateWeb.requestId)
 }
 
-// string email = 2;
+// required string email = 2;
+inline bool AuthenticateWeb::_internal_has_email() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool AuthenticateWeb::has_email() const {
+  return _internal_has_email();
+}
 inline void AuthenticateWeb::clear_email() {
   email_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& AuthenticateWeb::email() const {
   // @@protoc_insertion_point(field_get:authentication.AuthenticateWeb.email)
@@ -1425,7 +1628,7 @@ inline const std::string& AuthenticateWeb::email() const {
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void AuthenticateWeb::set_email(ArgT0&& arg0, ArgT... args) {
- 
+ _has_bits_[0] |= 0x00000001u;
  email_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:authentication.AuthenticateWeb.email)
 }
@@ -1438,31 +1641,43 @@ inline const std::string& AuthenticateWeb::_internal_email() const {
   return email_.Get();
 }
 inline void AuthenticateWeb::_internal_set_email(const std::string& value) {
-  
+  _has_bits_[0] |= 0x00000001u;
   email_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
 inline std::string* AuthenticateWeb::_internal_mutable_email() {
-  
+  _has_bits_[0] |= 0x00000001u;
   return email_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* AuthenticateWeb::release_email() {
   // @@protoc_insertion_point(field_release:authentication.AuthenticateWeb.email)
-  return email_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+  if (!_internal_has_email()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return email_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
 inline void AuthenticateWeb::set_allocated_email(std::string* email) {
   if (email != nullptr) {
-    
+    _has_bits_[0] |= 0x00000001u;
   } else {
-    
+    _has_bits_[0] &= ~0x00000001u;
   }
   email_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), email,
       GetArenaForAllocation());
   // @@protoc_insertion_point(field_set_allocated:authentication.AuthenticateWeb.email)
 }
 
-// string plaintextPassword = 3;
+// required string plaintextPassword = 3;
+inline bool AuthenticateWeb::_internal_has_plaintextpassword() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool AuthenticateWeb::has_plaintextpassword() const {
+  return _internal_has_plaintextpassword();
+}
 inline void AuthenticateWeb::clear_plaintextpassword() {
   plaintextpassword_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline const std::string& AuthenticateWeb::plaintextpassword() const {
   // @@protoc_insertion_point(field_get:authentication.AuthenticateWeb.plaintextPassword)
@@ -1471,7 +1686,7 @@ inline const std::string& AuthenticateWeb::plaintextpassword() const {
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void AuthenticateWeb::set_plaintextpassword(ArgT0&& arg0, ArgT... args) {
- 
+ _has_bits_[0] |= 0x00000002u;
  plaintextpassword_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:authentication.AuthenticateWeb.plaintextPassword)
 }
@@ -1484,22 +1699,26 @@ inline const std::string& AuthenticateWeb::_internal_plaintextpassword() const {
   return plaintextpassword_.Get();
 }
 inline void AuthenticateWeb::_internal_set_plaintextpassword(const std::string& value) {
-  
+  _has_bits_[0] |= 0x00000002u;
   plaintextpassword_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
 inline std::string* AuthenticateWeb::_internal_mutable_plaintextpassword() {
-  
+  _has_bits_[0] |= 0x00000002u;
   return plaintextpassword_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* AuthenticateWeb::release_plaintextpassword() {
   // @@protoc_insertion_point(field_release:authentication.AuthenticateWeb.plaintextPassword)
-  return plaintextpassword_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+  if (!_internal_has_plaintextpassword()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return plaintextpassword_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
 inline void AuthenticateWeb::set_allocated_plaintextpassword(std::string* plaintextpassword) {
   if (plaintextpassword != nullptr) {
-    
+    _has_bits_[0] |= 0x00000002u;
   } else {
-    
+    _has_bits_[0] &= ~0x00000002u;
   }
   plaintextpassword_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), plaintextpassword,
       GetArenaForAllocation());
@@ -1510,9 +1729,17 @@ inline void AuthenticateWeb::set_allocated_plaintextpassword(std::string* plaint
 
 // AuthenticateWebSuccess
 
-// int64 requestId = 1;
+// required int64 requestId = 1;
+inline bool AuthenticateWebSuccess::_internal_has_requestid() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool AuthenticateWebSuccess::has_requestid() const {
+  return _internal_has_requestid();
+}
 inline void AuthenticateWebSuccess::clear_requestid() {
   requestid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWebSuccess::_internal_requestid() const {
   return requestid_;
@@ -1522,7 +1749,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWebSuccess::requestid() const 
   return _internal_requestid();
 }
 inline void AuthenticateWebSuccess::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000002u;
   requestid_ = value;
 }
 inline void AuthenticateWebSuccess::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1530,9 +1757,17 @@ inline void AuthenticateWebSuccess::set_requestid(::PROTOBUF_NAMESPACE_ID::int64
   // @@protoc_insertion_point(field_set:authentication.AuthenticateWebSuccess.requestId)
 }
 
-// int64 userId = 2;
+// required int64 userId = 2;
+inline bool AuthenticateWebSuccess::_internal_has_userid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool AuthenticateWebSuccess::has_userid() const {
+  return _internal_has_userid();
+}
 inline void AuthenticateWebSuccess::clear_userid() {
   userid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWebSuccess::_internal_userid() const {
   return userid_;
@@ -1542,7 +1777,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWebSuccess::userid() const {
   return _internal_userid();
 }
 inline void AuthenticateWebSuccess::_internal_set_userid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000004u;
   userid_ = value;
 }
 inline void AuthenticateWebSuccess::set_userid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1550,9 +1785,17 @@ inline void AuthenticateWebSuccess::set_userid(::PROTOBUF_NAMESPACE_ID::int64 va
   // @@protoc_insertion_point(field_set:authentication.AuthenticateWebSuccess.userId)
 }
 
-// string creationDate = 3;
+// required string creationDate = 3;
+inline bool AuthenticateWebSuccess::_internal_has_creationdate() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool AuthenticateWebSuccess::has_creationdate() const {
+  return _internal_has_creationdate();
+}
 inline void AuthenticateWebSuccess::clear_creationdate() {
   creationdate_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& AuthenticateWebSuccess::creationdate() const {
   // @@protoc_insertion_point(field_get:authentication.AuthenticateWebSuccess.creationDate)
@@ -1561,7 +1804,7 @@ inline const std::string& AuthenticateWebSuccess::creationdate() const {
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void AuthenticateWebSuccess::set_creationdate(ArgT0&& arg0, ArgT... args) {
- 
+ _has_bits_[0] |= 0x00000001u;
  creationdate_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:authentication.AuthenticateWebSuccess.creationDate)
 }
@@ -1574,22 +1817,26 @@ inline const std::string& AuthenticateWebSuccess::_internal_creationdate() const
   return creationdate_.Get();
 }
 inline void AuthenticateWebSuccess::_internal_set_creationdate(const std::string& value) {
-  
+  _has_bits_[0] |= 0x00000001u;
   creationdate_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
 inline std::string* AuthenticateWebSuccess::_internal_mutable_creationdate() {
-  
+  _has_bits_[0] |= 0x00000001u;
   return creationdate_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* AuthenticateWebSuccess::release_creationdate() {
   // @@protoc_insertion_point(field_release:authentication.AuthenticateWebSuccess.creationDate)
-  return creationdate_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+  if (!_internal_has_creationdate()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return creationdate_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
 inline void AuthenticateWebSuccess::set_allocated_creationdate(std::string* creationdate) {
   if (creationdate != nullptr) {
-    
+    _has_bits_[0] |= 0x00000001u;
   } else {
-    
+    _has_bits_[0] &= ~0x00000001u;
   }
   creationdate_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), creationdate,
       GetArenaForAllocation());
@@ -1600,9 +1847,17 @@ inline void AuthenticateWebSuccess::set_allocated_creationdate(std::string* crea
 
 // AuthenticateWebFailure
 
-// int64 requestId = 1;
+// required int64 requestId = 1;
+inline bool AuthenticateWebFailure::_internal_has_requestid() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool AuthenticateWebFailure::has_requestid() const {
+  return _internal_has_requestid();
+}
 inline void AuthenticateWebFailure::clear_requestid() {
   requestid_ = int64_t{0};
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWebFailure::_internal_requestid() const {
   return requestid_;
@@ -1612,7 +1867,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 AuthenticateWebFailure::requestid() const 
   return _internal_requestid();
 }
 inline void AuthenticateWebFailure::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+  _has_bits_[0] |= 0x00000001u;
   requestid_ = value;
 }
 inline void AuthenticateWebFailure::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1620,9 +1875,17 @@ inline void AuthenticateWebFailure::set_requestid(::PROTOBUF_NAMESPACE_ID::int64
   // @@protoc_insertion_point(field_set:authentication.AuthenticateWebFailure.requestId)
 }
 
-// .authentication.AuthenticateWebFailure.Reason reason = 2;
+// required .authentication.AuthenticateWebFailure.Reason reason = 2;
+inline bool AuthenticateWebFailure::_internal_has_reason() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool AuthenticateWebFailure::has_reason() const {
+  return _internal_has_reason();
+}
 inline void AuthenticateWebFailure::clear_reason() {
   reason_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::authentication::AuthenticateWebFailure_Reason AuthenticateWebFailure::_internal_reason() const {
   return static_cast< ::authentication::AuthenticateWebFailure_Reason >(reason_);
@@ -1632,7 +1895,8 @@ inline ::authentication::AuthenticateWebFailure_Reason AuthenticateWebFailure::r
   return _internal_reason();
 }
 inline void AuthenticateWebFailure::_internal_set_reason(::authentication::AuthenticateWebFailure_Reason value) {
-  
+  assert(::authentication::AuthenticateWebFailure_Reason_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
   reason_ = value;
 }
 inline void AuthenticateWebFailure::set_reason(::authentication::AuthenticateWebFailure_Reason value) {

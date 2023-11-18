@@ -5,33 +5,10 @@ ChatClient::ChatClient()
 {
 	this->m_idRoom = -1;
     this->m_idUser = -1;
-	this->m_pTCP = nullptr;
-    this->m_isInitialized = false;
 }
 
 ChatClient::~ChatClient()
 {
-}
-
-bool ChatClient::Initialize(const char* host, const char* port)
-{
-    if (this->m_isInitialized)
-    {
-        // Already initialized
-        return true;
-    }
-
-    // Initialize WSA and socket
-    this->m_pTCP = new TCPClient();
-    bool TCPInitialized = this->m_pTCP->Initialize(host, port);
-    if (!TCPInitialized)
-    {
-        printf("Error initializing TCP!");
-        return false;
-    }
-
-    this->m_isInitialized = true;
-    return true;
 }
 
 void ChatClient::Destroy()
@@ -41,9 +18,9 @@ void ChatClient::Destroy()
         // If its in a room, we must exit the room first to clear the username
         this->LeaveRoom();
     }
-    this->m_pTCP->Destroy();
-    delete this->m_pTCP;
-    this->m_isInitialized = false;
+
+    this->TCPClient::Destroy();
+
     return;
 }
 
@@ -71,7 +48,7 @@ void ChatClient::SendChatMessage(const std::string& msg)
     // Serialize and send request
     chatMsg.SerializeToString(&msgSerialized);
 
-    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), "chatmessage", msgSerialized);
+    this->SendRequest(this->GetSocket(), "chatmessage", msgSerialized);
     return;
 }
 
@@ -92,16 +69,16 @@ bool ChatClient::JoinRoom(int idRoom, std::string& errorMsgOut)
 
     // Serialize and send request
     chatJoinRoom.SerializeToString(&joinroomSerialized);
-    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), "joinroom", joinroomSerialized);
+    this->SendRequest(this->GetSocket(), "joinroom", joinroomSerialized);
 
     // Wait for the server's response if the user was able to join the room
     std::string dataTypeOut;
     std::string dataOut;
     chat::Response chatResponse;
-    bool haveResponse = this->m_pTCP->CheckMsgFromServer(3);
+    bool haveResponse = this->CheckMsgFromServer(3);
     if (haveResponse)
     {
-        this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), dataTypeOut, dataOut);
+        this->ReceiveRequest(this->GetSocket(), dataTypeOut, dataOut);
     }
     else
     {
@@ -148,7 +125,7 @@ void ChatClient::LeaveRoom()
 
     // Serialize and send request
     chatLeaveRoom.SerializeToString(&leaveroomSerialized);
-    this->m_pTCP->SendRequest(this->m_pTCP->GetSocket(), "leaveroom", leaveroomSerialized);
+    this->SendRequest(this->GetSocket(), "leaveroom", leaveroomSerialized);
 
     this->m_idRoom = -1;
 
@@ -161,7 +138,7 @@ std::string ChatClient::ReceiveRoomMsg()
     std::string dataOut;
     chat::ChatMessage chatMsg;
 
-    bool isNewMsg = this->m_pTCP->ReceiveRequest(this->m_pTCP->GetSocket(), dataTypeOut, dataOut);
+    bool isNewMsg = this->ReceiveRequest(this->GetSocket(), dataTypeOut, dataOut);
 
     if (isNewMsg && dataTypeOut == "")
     {

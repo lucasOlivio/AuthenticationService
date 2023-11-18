@@ -4,41 +4,10 @@
 ChatServer::ChatServer()
 {
     this->m_mapRoomClients = {};
-
-    this->m_pTCP = nullptr;
-    this->m_isInitialized = false;
 }
 
 ChatServer::~ChatServer()
 {
-}
-
-bool ChatServer::Initialize(const char* host, const char* port)
-{
-    if (this->m_isInitialized)
-    {
-        // Already initialized
-        return true;
-    }
-
-    // Initialize WSA and socket
-    this->m_pTCP = new TCPServer();
-    bool TCPInitialized = this->m_pTCP->Initialize(host, port);
-    if (!TCPInitialized)
-    {
-        printf("Error initializing TCP!");
-        return false;
-    }
-
-    this->m_isInitialized = true;
-    return true;
-}
-
-void ChatServer::Destroy()
-{
-    this->m_pTCP->Destroy();
-    delete this->m_pTCP;
-    this->m_isInitialized = false;
 }
 
 bool ChatServer::IsRoomCreated(int idRoom)
@@ -97,7 +66,7 @@ void ChatServer::AddClientToRoom(int idRoom, const int& idUser, SOCKET& client)
 
     // Succesfully added the new user to the room
     chatResponse.SerializeToString(&responseSerialized);
-    this->m_pTCP->SendRequest(client, "response", responseSerialized);
+    this->SendRequest(client, "response", responseSerialized);
 
     std::string joinedMsg = "has joined the room";
     this->BroadcastToRoom(idRoom, idUser, joinedMsg);
@@ -157,7 +126,7 @@ void ChatServer::BroadcastToRoom(int idRoom, int idUser, const std::string& msg)
 
     for (std::pair<int, SOCKET> user : this->m_mapRoomClients[idRoom])
     {
-        this->m_pTCP->SendRequest(user.second, "chatmessage", msgSerialized);
+        this->SendRequest(user.second, "chatmessage", msgSerialized);
     }
 
     return;
@@ -166,7 +135,7 @@ void ChatServer::BroadcastToRoom(int idRoom, int idUser, const std::string& msg)
 void ChatServer::ExecuteIncommingMsgs()
 {
     std::map<SOCKET, myTcp::sPacketData> mapNewMsgs;
-    this->m_pTCP->ReadNewMsgs(mapNewMsgs);
+    this->ReadNewMsgs(mapNewMsgs);
 
     for (std::pair<SOCKET, myTcp::sPacketData> newMsg : mapNewMsgs)
     {
