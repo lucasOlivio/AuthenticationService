@@ -211,11 +211,11 @@ class Response final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMsgFieldNumber = 2,
-    kUserIdFieldNumber = 3,
-    kSuccessFieldNumber = 1,
+    kMsgFieldNumber = 1,
+    kUserIdFieldNumber = 2,
+    kSuccessFieldNumber = 3,
   };
-  // required string msg = 2;
+  // required string msg = 1;
   bool has_msg() const;
   private:
   bool _internal_has_msg() const;
@@ -233,7 +233,7 @@ class Response final :
   std::string* _internal_mutable_msg();
   public:
 
-  // optional int64 userId = 3;
+  // required int64 userId = 2;
   bool has_userid() const;
   private:
   bool _internal_has_userid() const;
@@ -246,7 +246,7 @@ class Response final :
   void _internal_set_userid(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // required bool success = 1;
+  // required bool success = 3;
   bool has_success() const;
   private:
   bool _internal_has_success() const;
@@ -1192,35 +1192,7 @@ class ChatMessage final :
 #endif  // __GNUC__
 // Response
 
-// required bool success = 1;
-inline bool Response::_internal_has_success() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
-  return value;
-}
-inline bool Response::has_success() const {
-  return _internal_has_success();
-}
-inline void Response::clear_success() {
-  success_ = false;
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline bool Response::_internal_success() const {
-  return success_;
-}
-inline bool Response::success() const {
-  // @@protoc_insertion_point(field_get:chat.Response.success)
-  return _internal_success();
-}
-inline void Response::_internal_set_success(bool value) {
-  _has_bits_[0] |= 0x00000004u;
-  success_ = value;
-}
-inline void Response::set_success(bool value) {
-  _internal_set_success(value);
-  // @@protoc_insertion_point(field_set:chat.Response.success)
-}
-
-// required string msg = 2;
+// required string msg = 1;
 inline bool Response::_internal_has_msg() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -1278,7 +1250,7 @@ inline void Response::set_allocated_msg(std::string* msg) {
   // @@protoc_insertion_point(field_set_allocated:chat.Response.msg)
 }
 
-// optional int64 userId = 3;
+// required int64 userId = 2;
 inline bool Response::_internal_has_userid() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -1304,6 +1276,34 @@ inline void Response::_internal_set_userid(::PROTOBUF_NAMESPACE_ID::int64 value)
 inline void Response::set_userid(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_userid(value);
   // @@protoc_insertion_point(field_set:chat.Response.userId)
+}
+
+// required bool success = 3;
+inline bool Response::_internal_has_success() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool Response::has_success() const {
+  return _internal_has_success();
+}
+inline void Response::clear_success() {
+  success_ = false;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline bool Response::_internal_success() const {
+  return success_;
+}
+inline bool Response::success() const {
+  // @@protoc_insertion_point(field_get:chat.Response.success)
+  return _internal_success();
+}
+inline void Response::_internal_set_success(bool value) {
+  _has_bits_[0] |= 0x00000004u;
+  success_ = value;
+}
+inline void Response::set_success(bool value) {
+  _internal_set_success(value);
+  // @@protoc_insertion_point(field_set:chat.Response.success)
 }
 
 // -------------------------------------------------------------------

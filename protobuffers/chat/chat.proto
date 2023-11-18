@@ -3,9 +3,9 @@ syntax = "proto2";
 package chat;
 
 message Response {
-  required bool success = 1;
-  required string msg = 2;
-  optional int64 userId = 3;
+  required string msg = 1;
+  required int64 userId = 2;
+  required bool success = 3;
 }
 
 message Register {

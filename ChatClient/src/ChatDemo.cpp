@@ -44,7 +44,11 @@ void ChatDemo::RunChat()
 	this->m_isRunning = true;
 	while (this->m_isRunning)
 	{
-		if (this->m_pChat->IsInRoom())
+		if (!this->m_pChat->IsLogged())
+		{
+			LoginScene();
+		}
+		else if (this->m_pChat->IsInRoom())
 		{
 			InRoomScene();
 		}
@@ -59,12 +63,49 @@ void ChatDemo::RunChat()
 	return;
 }
 
+void ChatDemo::LoginScene()
+{
+	int option;
+	std::string email = "";
+	std::string password = "";
+	std::string responseMsg = "";
+
+	system("cls");
+	printf("\n\n0 - Exit\n1 - Login\n2 - Register\n\noption: ");
+	std::cin >> option;
+	if (option == 0)
+	{
+		// Exiting program;
+		this->m_isRunning = false;
+		return;
+	}
+	
+	printf("Enter email: ");
+	std::cin >> email;
+	printf("Enter password: ");
+	std::cin >> password;
+
+	if (option == 1)
+	{
+		m_pChat->Login(email, password, responseMsg);
+	}
+	else if (option == 2)
+	{
+		m_pChat->Register(email, password, responseMsg);
+	}
+
+	printf(("\n" + responseMsg + "\n\n").c_str());
+	system("pause");
+
+	return;
+}
+
 void ChatDemo::OutRoomScene()
 {
 	uint32 idRoom;
-	std::string username = "";
 	std::string errorMsg = "";
 
+	system("cls");
 	printf("Join room id (Between %d and %d, or 0 to exit): ", MIN_ROOM_ID, MAX_ROOM_ID);
 	std::cin >> idRoom;
 	if (idRoom == 0)
@@ -79,14 +120,11 @@ void ChatDemo::OutRoomScene()
 		return;
 	}
 
-	printf("Enter username: ");
-	std::cin >> username;
-
 	// Try to enter room with this username
 	if (!this->m_pChat->JoinRoom(idRoom, errorMsg))
 	{
 		// couldn't join
-		printf("Could not join room: %s\n\n", errorMsg.c_str());
+		printf("\nCould not join room: %s\n\n", errorMsg.c_str());
 		return;
 	}
 

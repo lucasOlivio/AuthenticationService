@@ -26,6 +26,9 @@ public:
 	// Run main loop
 	void RunChat();
 
+	// UI for user in login page
+	void LoginScene();
+
 	// UI for user not in room
 	void OutRoomScene();
 

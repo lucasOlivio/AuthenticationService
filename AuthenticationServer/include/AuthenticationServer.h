@@ -37,7 +37,11 @@ public:
 	void LoadPrepStatements();
 
 	// Creates new user auth and send response back to client
-	void CreateNewAccount(SOCKET& client, std::string packetData, 
+	void CreateNewAccount(SOCKET& client, std::string packetDataIn, 
+						  std::string& responseTypeOut, std::string& responseDataOut);
+
+	// Compare user credentials with database data
+	void AuthenticateUser(SOCKET& client, std::string packetDataIn,
 						  std::string& responseTypeOut, std::string& responseDataOut);
 
 	// Get which clients sent message and decide what to do with it based on the message type

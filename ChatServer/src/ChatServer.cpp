@@ -29,8 +29,6 @@ bool ChatServer::Initialize(const char* hostServer, const char* portServer, cons
         return false;
     }
 
-    m_pAuthClient->SendCreateUserRequest(1, "test@", "test");
-
     return true;
 }
 
@@ -84,6 +82,7 @@ void ChatServer::AddClientToRoom(int idRoom, const int& idUser, SOCKET& client)
     chat::Response chatResponse;
     std::string responseSerialized;
     chatResponse.set_success(true);
+    chatResponse.set_userid(idRoom);
     chatResponse.set_msg("ok");
 
     this->m_mapRoomClients[idRoom][idUser] = client;
@@ -234,6 +233,16 @@ void ChatServer::ExecuteIncommingMsgs()
         }
         else if (msgPacket.dataType == "authenticate")
         {
+            chat::Authenticate chatAuthenticate;
+            chatAuthenticate.ParseFromString(msgPacket.data);
+
+            // Map the request id for the response later
+            int requestId = (int)clientSocket;
+            m_mapRequestSocket[requestId] = clientSocket;
+
+            // Use auth client to authenticate user in auth server
+            m_pAuthClient->SendAuthUserRequest(requestId, chatAuthenticate.email(), chatAuthenticate.plaintextpassword());
+
             continue;
         }
     }
@@ -255,7 +264,7 @@ bool ChatServer::GetSocketFromRequest(int requestIdIn, SOCKET& socketOut)
 
 void ChatServer::ProccessAuthResponses()
 {
-    int requestId, userId;
+    int requestId = -1, userId = -1;
     bool success;
     std::string response;
 
@@ -279,15 +288,18 @@ void ChatServer::ProccessAuthResponses()
         // Build protobuffer response
         std::string msgSerialized;
         chat::Response chatResponse;
-        chatResponse.set_success(success);
         chatResponse.set_msg(response);
-        if (success)
-        {
-            chatResponse.set_userid(userId);
-        }
+        chatResponse.set_userid(userId);
+        chatResponse.set_success(success);
 
         // Send request to client
-        msgSerialized = chatResponse.SerializeAsString();
+        bool isSerialized = chatResponse.SerializeToString(&msgSerialized);
+        if (!isSerialized)
+        {
+            printf("Error serializing response\n");
+            continue;
+        }
+
         SendRequest(clientSocket, "response", msgSerialized);
     }
 }

@@ -144,17 +144,97 @@ void AuthenticationServer::CreateNewAccount(SOCKET& client, std::string packetDa
     // Create user web auth
     pStmt = m_PreparedStatements[(int)StatementType::CreateWebAuth];
     pStmt->setString(1, createAccount.email());
-    pStmt->setDateTime(2, genSalt);
-    pStmt->setDateTime(3, hashedPass);
+    pStmt->setString(2, genSalt);
+    pStmt->setString(3, hashedPass);
     pStmt->setInt(4, userId);
 
     pStmt->execute();
 
     webSuccess.set_userid(userId);
+    webSuccess.set_timecreation(timeNow);
     responseDataOut = webSuccess.SerializeAsString();
     responseTypeOut = "createaccountwebsuccess";
 
     return;
+}
+
+void AuthenticationServer::AuthenticateUser(SOCKET& client, std::string packetDataIn, 
+                                            std::string& responseTypeOut, std::string& responseDataOut)
+{
+    using namespace std;
+
+    // Deserialize packet
+    authentication::AuthenticateWeb authAccount;
+    bool isDeserialized = authAccount.ParseFromString(packetDataIn);
+
+    // Prepare responses
+    authentication::AuthenticateWebSuccess webSuccess;
+    webSuccess.set_requestid(authAccount.requestid());
+    authentication::AuthenticateWebFailure webFailure;
+    webFailure.set_requestid(authAccount.requestid());
+    if (!isDeserialized)
+    {
+        responseTypeOut = "authenticatewebfailure";
+        webFailure.set_reason(authentication::AuthenticateWebFailure_Reason_INTERNAL_SERVER_ERROR);
+        webFailure.SerializeToString(&responseDataOut);
+        printf("error deserializing message\n");
+        return;
+    }
+
+    // Check if email exist in db
+    sql::PreparedStatement* pStmt = m_PreparedStatements[(int)StatementType::SelectWebAuth];
+    pStmt->setString(1, authAccount.email());
+    sql::ResultSet* response = pStmt->executeQuery();
+    if (response->rowsCount() == 0)
+    {
+        responseTypeOut = "authenticatewebfailure";
+        webFailure.set_reason(authentication::AuthenticateWebFailure_Reason_INVALID_CREDENTIALS);
+        responseDataOut = webFailure.SerializeAsString();
+        return;
+    }
+
+    // Check if password is the same
+    response->next();
+    string salt = response->getString("salt");
+    string dbPassHash = response->getString("hashed_password");
+    int userId = response->getInt("userId");
+
+    string authPassHash = HashPassword(authAccount.plaintextpassword(), salt);
+
+    if (dbPassHash == authPassHash)
+    {
+        // Auth success
+
+        // Get user info
+        pStmt = m_PreparedStatements[(int)StatementType::SelectUser];
+        pStmt->setInt(1, userId);
+        sql::ResultSet* responseUser = pStmt->executeQuery();
+        responseUser->next();
+        string creationDate = responseUser->getString("creation_date");
+
+        // Build auth success response string
+        responseTypeOut = "authenticatewebsuccess";
+        webSuccess.set_userid(userId);
+        webSuccess.set_creationdate(creationDate);
+
+        responseDataOut = webSuccess.SerializeAsString();
+
+        // Update last login
+        std::string timeNow = TimeNow(DEFAULT_DB_DATETIME);
+        pStmt = m_PreparedStatements[(int)StatementType::UpdateUser];
+        pStmt->setString(1, timeNow);
+        pStmt->setInt(2, userId);
+        pStmt->execute();
+
+        return;
+    }
+    else
+    {
+        responseTypeOut = "authenticatewebfailure";
+        webFailure.set_reason(authentication::AuthenticateWebFailure_Reason_INVALID_CREDENTIALS);
+        responseDataOut = webFailure.SerializeAsString();
+        return;
+    }
 }
 
 void AuthenticationServer::ExecuteIncommingMsgs()
@@ -176,11 +256,7 @@ void AuthenticationServer::ExecuteIncommingMsgs()
         }
         else if (msgPacket.dataType == "authenticateweb")
         {
-            continue;
-        }
-        if (msgPacket.dataType == "chatmessage")
-        {
-            continue;
+            AuthenticateUser(clientSocket, msgPacket.data, responseType, responseData);
         }
         
         // Return to client the result of the action

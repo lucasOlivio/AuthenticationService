@@ -109,12 +109,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chat_2eproto::offsets[] PROTOB
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::chat::Response, success_),
   PROTOBUF_FIELD_OFFSET(::chat::Response, msg_),
   PROTOBUF_FIELD_OFFSET(::chat::Response, userid_),
-  2,
+  PROTOBUF_FIELD_OFFSET(::chat::Response, success_),
   0,
   1,
+  2,
   PROTOBUF_FIELD_OFFSET(::chat::Register, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::chat::Register, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -187,8 +187,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nchat.proto\022\004chat\"8\n\010Response\022\017\n\007succes"
-  "s\030\001 \002(\010\022\013\n\003msg\030\002 \002(\t\022\016\n\006userId\030\003 \001(\003\"4\n\010"
+  "\n\nchat.proto\022\004chat\"8\n\010Response\022\013\n\003msg\030\001 "
+  "\002(\t\022\016\n\006userId\030\002 \002(\003\022\017\n\007success\030\003 \002(\010\"4\n\010"
   "Register\022\r\n\005email\030\001 \002(\t\022\031\n\021plaintextPass"
   "word\030\002 \002(\t\"8\n\014Authenticate\022\r\n\005email\030\001 \002("
   "\t\022\031\n\021plaintextPassword\030\002 \002(\t\"*\n\010JoinRoom"
@@ -217,17 +217,17 @@ namespace chat {
 class Response::_Internal {
  public:
   using HasBits = decltype(std::declval<Response>()._has_bits_);
-  static void set_has_success(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
-  }
   static void set_has_msg(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_userid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_success(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000005) ^ 0x00000005) != 0;
+    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
   }
 };
 
@@ -311,18 +311,9 @@ const char* Response::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // required bool success = 1;
+      // required string msg = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          _Internal::set_has_success(&has_bits);
-          success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // required string msg = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_msg();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -332,11 +323,20 @@ const char* Response::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
         } else
           goto handle_unusual;
         continue;
-      // optional int64 userId = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+      // required int64 userId = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           _Internal::set_has_userid(&has_bits);
           userid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // required bool success = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_success(&has_bits);
+          success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -372,26 +372,26 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required bool success = 1;
-  if (cached_has_bits & 0x00000004u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_success(), target);
-  }
-
-  // required string msg = 2;
+  // required string msg = 1;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_msg().data(), static_cast<int>(this->_internal_msg().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "chat.Response.msg");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_msg(), target);
+        1, this->_internal_msg(), target);
   }
 
-  // optional int64 userId = 3;
+  // required int64 userId = 2;
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_userid(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_userid(), target);
+  }
+
+  // required bool success = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_success(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -407,14 +407,19 @@ size_t Response::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (_internal_has_msg()) {
-    // required string msg = 2;
+    // required string msg = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_msg());
   }
 
+  if (_internal_has_userid()) {
+    // required int64 userId = 2;
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64SizePlusOne(this->_internal_userid());
+  }
+
   if (_internal_has_success()) {
-    // required bool success = 1;
+    // required bool success = 3;
     total_size += 1 + 1;
   }
 
@@ -424,13 +429,16 @@ size_t Response::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:chat.Response)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000005) ^ 0x00000005) == 0) {  // All required fields are present.
-    // required string msg = 2;
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+    // required string msg = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_msg());
 
-    // required bool success = 1;
+    // required int64 userId = 2;
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64SizePlusOne(this->_internal_userid());
+
+    // required bool success = 3;
     total_size += 1 + 1;
 
   } else {
@@ -439,12 +447,6 @@ size_t Response::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
-
-  // optional int64 userId = 3;
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000002u) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64SizePlusOne(this->_internal_userid());
-  }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
