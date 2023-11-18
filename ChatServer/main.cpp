@@ -18,6 +18,7 @@ int main()
 	while (true)
 	{
 		server.ExecuteIncommingMsgs();
+		server.ProccessAuthResponses();
 
 		if (_kbhit())
 		{

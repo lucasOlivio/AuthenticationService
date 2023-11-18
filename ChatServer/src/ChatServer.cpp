@@ -29,6 +29,8 @@ bool ChatServer::Initialize(const char* hostServer, const char* portServer, cons
         return false;
     }
 
+    m_pAuthClient->SendCreateUserRequest(1, "test@", "test");
+
     return true;
 }
 
@@ -178,6 +180,7 @@ void ChatServer::ExecuteIncommingMsgs()
 
             // Client didn't leave the room, so we must remove him
             this->RemoveClientFromRoom(idRoom, idUser);
+            continue;
         }
         
         // Find which action to take
@@ -205,7 +208,7 @@ void ChatServer::ExecuteIncommingMsgs()
             this->RemoveClientFromRoom((int)chatLeaveRoom.roomid(), (int)chatLeaveRoom.userid());
             continue;
         }
-        if (msgPacket.dataType == "chatmessage")
+        else if (msgPacket.dataType == "chatmessage")
         {
             chat::ChatMessage chatMsg;
             chatMsg.ParseFromString(msgPacket.data);
@@ -215,10 +218,76 @@ void ChatServer::ExecuteIncommingMsgs()
 
             continue;
         }
+        else if (msgPacket.dataType == "register")
+        {
+            chat::Register chatRegister;
+            chatRegister.ParseFromString(msgPacket.data);
+
+            // Map the request id for the response later
+            int requestId = (int)clientSocket;
+            m_mapRequestSocket[requestId] = clientSocket;
+
+            // Use auth client to register user in auth server
+            m_pAuthClient->SendCreateUserRequest(requestId, chatRegister.email(), chatRegister.plaintextpassword());
+
+            continue;
+        }
+        else if (msgPacket.dataType == "authenticate")
+        {
+            continue;
+        }
     }
 }
 
-void ChatServer::GetAuthResponses()
+bool ChatServer::GetSocketFromRequest(int requestIdIn, SOCKET& socketOut)
 {
-    
+    using namespace std;
+
+    map<int, SOCKET>::iterator it = m_mapRequestSocket.find(requestIdIn);
+    if (it == m_mapRequestSocket.end())
+    {
+        return false;
+    }
+
+    socketOut = it->second;
+    return true;
+}
+
+void ChatServer::ProccessAuthResponses()
+{
+    int requestId, userId;
+    bool success;
+    std::string response;
+
+    // TODO: This should be in a different thread
+    // Proccess all auth responses until socket have no new msgs
+    while (m_pAuthClient->ReceiveServerMsg(requestId, userId, success, response))
+    {
+        if (requestId == -1)
+        {
+            // Empty new msg
+            continue;
+        }
+
+        SOCKET clientSocket;
+        bool socketFound = GetSocketFromRequest(requestId, clientSocket);
+        if (!socketFound)
+        {
+            continue;
+        }
+
+        // Build protobuffer response
+        std::string msgSerialized;
+        chat::Response chatResponse;
+        chatResponse.set_success(success);
+        chatResponse.set_msg(response);
+        if (success)
+        {
+            chatResponse.set_userid(userId);
+        }
+
+        // Send request to client
+        msgSerialized = chatResponse.SerializeAsString();
+        SendRequest(clientSocket, "response", msgSerialized);
+    }
 }

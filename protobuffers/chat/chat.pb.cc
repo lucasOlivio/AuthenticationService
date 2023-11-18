@@ -20,6 +20,7 @@ namespace chat {
 constexpr Response::Response(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : msg_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , userid_(int64_t{0})
   , success_(false){}
 struct ResponseDefaultTypeInternal {
   constexpr ResponseDefaultTypeInternal()
@@ -30,6 +31,32 @@ struct ResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ResponseDefaultTypeInternal _Response_default_instance_;
+constexpr Register::Register(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : email_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , plaintextpassword_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+struct RegisterDefaultTypeInternal {
+  constexpr RegisterDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~RegisterDefaultTypeInternal() {}
+  union {
+    Register _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT RegisterDefaultTypeInternal _Register_default_instance_;
+constexpr Authenticate::Authenticate(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : email_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , plaintextpassword_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+struct AuthenticateDefaultTypeInternal {
+  constexpr AuthenticateDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~AuthenticateDefaultTypeInternal() {}
+  union {
+    Authenticate _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT AuthenticateDefaultTypeInternal _Authenticate_default_instance_;
 constexpr JoinRoom::JoinRoom(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : userid_(int64_t{0})
@@ -71,7 +98,7 @@ struct ChatMessageDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
 }  // namespace chat
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_chat_2eproto[4];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_chat_2eproto[6];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_chat_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_chat_2eproto = nullptr;
 
@@ -84,8 +111,30 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chat_2eproto::offsets[] PROTOB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::chat::Response, success_),
   PROTOBUF_FIELD_OFFSET(::chat::Response, msg_),
-  1,
+  PROTOBUF_FIELD_OFFSET(::chat::Response, userid_),
+  2,
   0,
+  1,
+  PROTOBUF_FIELD_OFFSET(::chat::Register, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::chat::Register, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::chat::Register, email_),
+  PROTOBUF_FIELD_OFFSET(::chat::Register, plaintextpassword_),
+  0,
+  1,
+  PROTOBUF_FIELD_OFFSET(::chat::Authenticate, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::chat::Authenticate, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::chat::Authenticate, email_),
+  PROTOBUF_FIELD_OFFSET(::chat::Authenticate, plaintextpassword_),
+  0,
+  1,
   PROTOBUF_FIELD_OFFSET(::chat::JoinRoom, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::chat::JoinRoom, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -120,31 +169,38 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chat_2eproto::offsets[] PROTOB
   0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 8, -1, sizeof(::chat::Response)},
-  { 10, 18, -1, sizeof(::chat::JoinRoom)},
-  { 20, 28, -1, sizeof(::chat::LeaveRoom)},
-  { 30, 39, -1, sizeof(::chat::ChatMessage)},
+  { 0, 9, -1, sizeof(::chat::Response)},
+  { 12, 20, -1, sizeof(::chat::Register)},
+  { 22, 30, -1, sizeof(::chat::Authenticate)},
+  { 32, 40, -1, sizeof(::chat::JoinRoom)},
+  { 42, 50, -1, sizeof(::chat::LeaveRoom)},
+  { 52, 61, -1, sizeof(::chat::ChatMessage)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::chat::_Response_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::chat::_Register_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::chat::_Authenticate_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::chat::_JoinRoom_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::chat::_LeaveRoom_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::chat::_ChatMessage_default_instance_),
 };
 
 const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nchat.proto\022\004chat\"(\n\010Response\022\017\n\007succes"
-  "s\030\001 \002(\010\022\013\n\003msg\030\002 \002(\t\"*\n\010JoinRoom\022\016\n\006user"
-  "Id\030\001 \002(\003\022\016\n\006roomId\030\002 \002(\003\"+\n\tLeaveRoom\022\016\n"
-  "\006userId\030\001 \002(\003\022\016\n\006roomId\030\002 \002(\003\":\n\013ChatMes"
-  "sage\022\016\n\006userId\030\001 \002(\003\022\016\n\006roomId\030\002 \002(\003\022\013\n\003"
-  "msg\030\003 \002(\t"
+  "\n\nchat.proto\022\004chat\"8\n\010Response\022\017\n\007succes"
+  "s\030\001 \002(\010\022\013\n\003msg\030\002 \002(\t\022\016\n\006userId\030\003 \001(\003\"4\n\010"
+  "Register\022\r\n\005email\030\001 \002(\t\022\031\n\021plaintextPass"
+  "word\030\002 \002(\t\"8\n\014Authenticate\022\r\n\005email\030\001 \002("
+  "\t\022\031\n\021plaintextPassword\030\002 \002(\t\"*\n\010JoinRoom"
+  "\022\016\n\006userId\030\001 \002(\003\022\016\n\006roomId\030\002 \002(\003\"+\n\tLeav"
+  "eRoom\022\016\n\006userId\030\001 \002(\003\022\016\n\006roomId\030\002 \002(\003\":\n"
+  "\013ChatMessage\022\016\n\006userId\030\001 \002(\003\022\016\n\006roomId\030\002"
+  " \002(\003\022\013\n\003msg\030\003 \002(\t"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_chat_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chat_2eproto = {
-  false, false, 209, descriptor_table_protodef_chat_2eproto, "chat.proto", 
-  &descriptor_table_chat_2eproto_once, nullptr, 0, 4,
+  false, false, 337, descriptor_table_protodef_chat_2eproto, "chat.proto", 
+  &descriptor_table_chat_2eproto_once, nullptr, 0, 6,
   schemas, file_default_instances, TableStruct_chat_2eproto::offsets,
   file_level_metadata_chat_2eproto, file_level_enum_descriptors_chat_2eproto, file_level_service_descriptors_chat_2eproto,
 };
@@ -162,13 +218,16 @@ class Response::_Internal {
  public:
   using HasBits = decltype(std::declval<Response>()._has_bits_);
   static void set_has_success(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_msg(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
+  static void set_has_userid(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
+    return ((has_bits[0] & 0x00000005) ^ 0x00000005) != 0;
   }
 };
 
@@ -190,13 +249,18 @@ Response::Response(const Response& from)
     msg_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_msg(), 
       GetArenaForAllocation());
   }
-  success_ = from.success_;
+  ::memcpy(&userid_, &from.userid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&success_) -
+    reinterpret_cast<char*>(&userid_)) + sizeof(success_));
   // @@protoc_insertion_point(copy_constructor:chat.Response)
 }
 
 void Response::SharedCtor() {
 msg_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-success_ = false;
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&userid_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&success_) -
+    reinterpret_cast<char*>(&userid_)) + sizeof(success_));
 }
 
 Response::~Response() {
@@ -231,7 +295,11 @@ void Response::Clear() {
   if (cached_has_bits & 0x00000001u) {
     msg_.ClearNonDefaultToEmpty();
   }
-  success_ = false;
+  if (cached_has_bits & 0x00000006u) {
+    ::memset(&userid_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&success_) -
+        reinterpret_cast<char*>(&userid_)) + sizeof(success_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -260,6 +328,15 @@ const char* Response::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           #ifndef NDEBUG
           ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "chat.Response.msg");
           #endif  // !NDEBUG
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // optional int64 userId = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_userid(&has_bits);
+          userid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -296,7 +373,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // required bool success = 1;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_success(), target);
   }
@@ -309,6 +386,12 @@ failure:
       "chat.Response.msg");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_msg(), target);
+  }
+
+  // optional int64 userId = 3;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_userid(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -341,7 +424,7 @@ size_t Response::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:chat.Response)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x00000005) ^ 0x00000005) == 0) {  // All required fields are present.
     // required string msg = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
@@ -356,6 +439,12 @@ size_t Response::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // optional int64 userId = 3;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000002u) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64SizePlusOne(this->_internal_userid());
+  }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
@@ -380,11 +469,14 @@ void Response::MergeFrom(const Response& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_msg(from._internal_msg());
     }
     if (cached_has_bits & 0x00000002u) {
+      userid_ = from.userid_;
+    }
+    if (cached_has_bits & 0x00000004u) {
       success_ = from.success_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -415,13 +507,600 @@ void Response::InternalSwap(Response* other) {
       &msg_, lhs_arena,
       &other->msg_, rhs_arena
   );
-  swap(success_, other->success_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Response, success_)
+      + sizeof(Response::success_)
+      - PROTOBUF_FIELD_OFFSET(Response, userid_)>(
+          reinterpret_cast<char*>(&userid_),
+          reinterpret_cast<char*>(&other->userid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Response::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
       file_level_metadata_chat_2eproto[0]);
+}
+
+// ===================================================================
+
+class Register::_Internal {
+ public:
+  using HasBits = decltype(std::declval<Register>()._has_bits_);
+  static void set_has_email(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_plaintextpassword(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static bool MissingRequiredFields(const HasBits& has_bits) {
+    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
+  }
+};
+
+Register::Register(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:chat.Register)
+}
+Register::Register(const Register& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  email_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_email()) {
+    email_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_email(), 
+      GetArenaForAllocation());
+  }
+  plaintextpassword_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_plaintextpassword()) {
+    plaintextpassword_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_plaintextpassword(), 
+      GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:chat.Register)
+}
+
+void Register::SharedCtor() {
+email_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+plaintextpassword_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+Register::~Register() {
+  // @@protoc_insertion_point(destructor:chat.Register)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void Register::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  email_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  plaintextpassword_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void Register::ArenaDtor(void* object) {
+  Register* _this = reinterpret_cast< Register* >(object);
+  (void)_this;
+}
+void Register::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void Register::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void Register::Clear() {
+// @@protoc_insertion_point(message_clear_start:chat.Register)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      email_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      plaintextpassword_.ClearNonDefaultToEmpty();
+    }
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Register::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // required string email = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_email();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "chat.Register.email");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // required string plaintextPassword = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_plaintextpassword();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "chat.Register.plaintextPassword");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* Register::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:chat.Register)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string email = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_email().data(), static_cast<int>(this->_internal_email().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "chat.Register.email");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_email(), target);
+  }
+
+  // required string plaintextPassword = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_plaintextpassword().data(), static_cast<int>(this->_internal_plaintextpassword().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "chat.Register.plaintextPassword");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_plaintextpassword(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:chat.Register)
+  return target;
+}
+
+size_t Register::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:chat.Register)
+  size_t total_size = 0;
+
+  if (_internal_has_email()) {
+    // required string email = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_email());
+  }
+
+  if (_internal_has_plaintextpassword()) {
+    // required string plaintextPassword = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_plaintextpassword());
+  }
+
+  return total_size;
+}
+size_t Register::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:chat.Register)
+  size_t total_size = 0;
+
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required string email = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_email());
+
+    // required string plaintextPassword = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_plaintextpassword());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Register::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    Register::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Register::GetClassData() const { return &_class_data_; }
+
+void Register::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<Register *>(to)->MergeFrom(
+      static_cast<const Register &>(from));
+}
+
+
+void Register::MergeFrom(const Register& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:chat.Register)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _internal_set_email(from._internal_email());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _internal_set_plaintextpassword(from._internal_plaintextpassword());
+    }
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Register::CopyFrom(const Register& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:chat.Register)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Register::IsInitialized() const {
+  if (_Internal::MissingRequiredFields(_has_bits_)) return false;
+  return true;
+}
+
+void Register::InternalSwap(Register* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &email_, lhs_arena,
+      &other->email_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &plaintextpassword_, lhs_arena,
+      &other->plaintextpassword_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Register::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[1]);
+}
+
+// ===================================================================
+
+class Authenticate::_Internal {
+ public:
+  using HasBits = decltype(std::declval<Authenticate>()._has_bits_);
+  static void set_has_email(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_plaintextpassword(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static bool MissingRequiredFields(const HasBits& has_bits) {
+    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
+  }
+};
+
+Authenticate::Authenticate(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:chat.Authenticate)
+}
+Authenticate::Authenticate(const Authenticate& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  email_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_email()) {
+    email_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_email(), 
+      GetArenaForAllocation());
+  }
+  plaintextpassword_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_plaintextpassword()) {
+    plaintextpassword_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_plaintextpassword(), 
+      GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:chat.Authenticate)
+}
+
+void Authenticate::SharedCtor() {
+email_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+plaintextpassword_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+Authenticate::~Authenticate() {
+  // @@protoc_insertion_point(destructor:chat.Authenticate)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void Authenticate::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  email_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  plaintextpassword_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void Authenticate::ArenaDtor(void* object) {
+  Authenticate* _this = reinterpret_cast< Authenticate* >(object);
+  (void)_this;
+}
+void Authenticate::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void Authenticate::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void Authenticate::Clear() {
+// @@protoc_insertion_point(message_clear_start:chat.Authenticate)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      email_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      plaintextpassword_.ClearNonDefaultToEmpty();
+    }
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Authenticate::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // required string email = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_email();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "chat.Authenticate.email");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // required string plaintextPassword = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_plaintextpassword();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "chat.Authenticate.plaintextPassword");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* Authenticate::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:chat.Authenticate)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string email = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_email().data(), static_cast<int>(this->_internal_email().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "chat.Authenticate.email");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_email(), target);
+  }
+
+  // required string plaintextPassword = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_plaintextpassword().data(), static_cast<int>(this->_internal_plaintextpassword().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "chat.Authenticate.plaintextPassword");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_plaintextpassword(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:chat.Authenticate)
+  return target;
+}
+
+size_t Authenticate::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:chat.Authenticate)
+  size_t total_size = 0;
+
+  if (_internal_has_email()) {
+    // required string email = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_email());
+  }
+
+  if (_internal_has_plaintextpassword()) {
+    // required string plaintextPassword = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_plaintextpassword());
+  }
+
+  return total_size;
+}
+size_t Authenticate::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:chat.Authenticate)
+  size_t total_size = 0;
+
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required string email = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_email());
+
+    // required string plaintextPassword = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_plaintextpassword());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Authenticate::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    Authenticate::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Authenticate::GetClassData() const { return &_class_data_; }
+
+void Authenticate::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<Authenticate *>(to)->MergeFrom(
+      static_cast<const Authenticate &>(from));
+}
+
+
+void Authenticate::MergeFrom(const Authenticate& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:chat.Authenticate)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _internal_set_email(from._internal_email());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _internal_set_plaintextpassword(from._internal_plaintextpassword());
+    }
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Authenticate::CopyFrom(const Authenticate& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:chat.Authenticate)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Authenticate::IsInitialized() const {
+  if (_Internal::MissingRequiredFields(_has_bits_)) return false;
+  return true;
+}
+
+void Authenticate::InternalSwap(Authenticate* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &email_, lhs_arena,
+      &other->email_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &plaintextpassword_, lhs_arena,
+      &other->plaintextpassword_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Authenticate::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[2]);
 }
 
 // ===================================================================
@@ -675,7 +1354,7 @@ void JoinRoom::InternalSwap(JoinRoom* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata JoinRoom::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
-      file_level_metadata_chat_2eproto[1]);
+      file_level_metadata_chat_2eproto[3]);
 }
 
 // ===================================================================
@@ -929,7 +1608,7 @@ void LeaveRoom::InternalSwap(LeaveRoom* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata LeaveRoom::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
-      file_level_metadata_chat_2eproto[2]);
+      file_level_metadata_chat_2eproto[4]);
 }
 
 // ===================================================================
@@ -1240,7 +1919,7 @@ void ChatMessage::InternalSwap(ChatMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ChatMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
-      file_level_metadata_chat_2eproto[3]);
+      file_level_metadata_chat_2eproto[5]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1248,6 +1927,12 @@ void ChatMessage::InternalSwap(ChatMessage* other) {
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::chat::Response* Arena::CreateMaybeMessage< ::chat::Response >(Arena* arena) {
   return Arena::CreateMessageInternal< ::chat::Response >(arena);
+}
+template<> PROTOBUF_NOINLINE ::chat::Register* Arena::CreateMaybeMessage< ::chat::Register >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::chat::Register >(arena);
+}
+template<> PROTOBUF_NOINLINE ::chat::Authenticate* Arena::CreateMaybeMessage< ::chat::Authenticate >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::chat::Authenticate >(arena);
 }
 template<> PROTOBUF_NOINLINE ::chat::JoinRoom* Arena::CreateMaybeMessage< ::chat::JoinRoom >(Arena* arena) {
   return Arena::CreateMessageInternal< ::chat::JoinRoom >(arena);

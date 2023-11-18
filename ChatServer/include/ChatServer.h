@@ -11,6 +11,8 @@ class ChatServer : public TCPServer
 private:
 	AuthenticationClient* m_pAuthClient;
 
+	std::map<int /* requestId */, SOCKET> m_mapRequestSocket;
+
 	// Mapping to the rooms we have and the clients in each one
 	std::map<int /* idRoom */, std::map<int /*idUser*/, SOCKET>> m_mapRoomClients;
 
@@ -39,6 +41,9 @@ public:
 	// Get which clients sent message and decide what to do with it based on the message type
 	void ExecuteIncommingMsgs();
 
+	// Match the given request id with the socket
+	bool GetSocketFromRequest(int requestIdIn, SOCKET& socketOut);
+
 	// Deal with authentication responses
-	void GetAuthResponses();
+	void ProccessAuthResponses();
 };

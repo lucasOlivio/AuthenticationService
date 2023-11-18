@@ -15,5 +15,5 @@ public:
 	void SendCreateUserRequest(int requestId, const std::string& email, const std::string& password);
 
 	// Receives all new messages from the server returning if new msg arrived
-	bool ReceiveServerMsg(int& requestId, int& userId, bool& success, int& errorReason);
+	bool ReceiveServerMsg(int& requestId, int& userId, bool& success, std::string& response);
 };

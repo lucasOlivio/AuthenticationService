@@ -6,7 +6,7 @@
 const char* DEFAULT_DB_DATETIME = "%Y-%m-%d %H:%M:%S";
 const int DEFAULT_SALT = 16;
 
-AuthenticationServer::AuthenticationServer() : m_pMysql(nullptr)
+AuthenticationServer::AuthenticationServer() : m_pMysql(nullptr), m_PreparedStatements({})
 {
 }
 
@@ -35,7 +35,7 @@ bool AuthenticationServer::Initialize(const char* authHost, const char* authPort
 		return false;
 	}
 
-   
+    this->LoadPrepStatements();
 
     return true;
 }
@@ -54,7 +54,7 @@ void AuthenticationServer::LoadPrepStatements()
         "INSERT INTO web_auth (email, salt, hashed_password, userId) VALUES (?, ?, ?, ?);"
     );
     m_PreparedStatements[(int)StatementType::SelectWebAuth] = m_pMysql->PrepareStatement(
-        "SELECT email, salt, hashed_password, userId FROM web_auth WHERE userId = ?;"
+        "SELECT email, salt, hashed_password, userId FROM web_auth WHERE email = ?;"
     );
     m_PreparedStatements[(int)StatementType::UpdateUser] = m_pMysql->PrepareStatement(
         "UPDATE web_auth SET email = ?, salt = ?, hashed_password = ? WHERE userId = ?;"
@@ -65,7 +65,7 @@ void AuthenticationServer::LoadPrepStatements()
         "INSERT INTO user (last_login, creation_date) VALUES (?, ?);"
     );
     m_PreparedStatements[(int)StatementType::SelectUser] = m_pMysql->PrepareStatement(
-        "SELECT id, last_login, creation_date FROM user WHERE userId = ?;"
+        "SELECT id, last_login, creation_date FROM user WHERE id = ?;"
     );
     m_PreparedStatements[(int)StatementType::UpdateUser] = m_pMysql->PrepareStatement(
         "UPDATE user SET last_login = ?  WHERE id = ?;"
@@ -78,7 +78,8 @@ void AuthenticationServer::LoadPrepStatements()
     );
 }
 
-void AuthenticationServer::CreateNewAccount(SOCKET& client, std::string packetDataIn, std::string responseTypeOut, std::string responseDataOut)
+void AuthenticationServer::CreateNewAccount(SOCKET& client, std::string packetDataIn, 
+                                            std::string& responseTypeOut, std::string& responseDataOut)
 {
     // Deserialize packet
     authentication::CreateAccountWeb createAccount;
@@ -98,17 +99,29 @@ void AuthenticationServer::CreateNewAccount(SOCKET& client, std::string packetDa
         return;
     }
 
+    // Check if email is already in db
+    sql::PreparedStatement* pStmt = m_PreparedStatements[(int)StatementType::SelectWebAuth];
+    pStmt->setString(1, createAccount.email());
+    sql::ResultSet* response = pStmt->executeQuery();
+    if (response->rowsCount() > 0)
+    {
+        responseTypeOut = "createaccountwebfailure";
+        webFailure.set_reason(authentication::CreateAccountWebFailure_Reason_ACCOUNT_ALREADY_EXISTS);
+        responseDataOut = webFailure.SerializeAsString();
+        return;
+    }
+
     // Create new id for user
     std::string timeNow = TimeNow(DEFAULT_DB_DATETIME);
-    sql::PreparedStatement* pStmt = m_PreparedStatements[(int)StatementType::CreateUser];
+    pStmt = m_PreparedStatements[(int)StatementType::CreateUser];
     pStmt->setDateTime(1, timeNow);
     pStmt->setDateTime(2, timeNow);
 
-    int count = pStmt->execute();
+    pStmt->execute();
 
     // Retrieve the last inserted ID
     pStmt = m_PreparedStatements[(int)StatementType::GetLastId];
-    sql::ResultSet* response = pStmt->executeQuery();
+    response = pStmt->executeQuery();
 
     int32_t userId = 0;
     while (response->next())
@@ -135,18 +148,11 @@ void AuthenticationServer::CreateNewAccount(SOCKET& client, std::string packetDa
     pStmt->setDateTime(3, hashedPass);
     pStmt->setInt(4, userId);
 
-    count = pStmt->execute();
-    if (count == 0)
-    {
-        responseTypeOut = "createaccountwebfailure";
-        webFailure.set_reason(authentication::CreateAccountWebFailure_Reason_INTERNAL_SERVER_ERROR);
-        webFailure.SerializeToString(&responseDataOut);
-        printf("failed to save web auth\n");
-        return;
-    }
+    pStmt->execute();
 
-    responseTypeOut = "createaccountwebsuccess";
     webSuccess.set_userid(userId);
+    responseDataOut = webSuccess.SerializeAsString();
+    responseTypeOut = "createaccountwebsuccess";
 
     return;
 }
@@ -167,7 +173,6 @@ void AuthenticationServer::ExecuteIncommingMsgs()
         if (msgPacket.dataType == "createaccountweb")
         {
             CreateNewAccount(clientSocket, msgPacket.data, responseType, responseData);
-            continue;
         }
         else if (msgPacket.dataType == "authenticateweb")
         {

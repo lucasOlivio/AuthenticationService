@@ -5,6 +5,17 @@ package chat;
 message Response {
   required bool success = 1;
   required string msg = 2;
+  optional int64 userId = 3;
+}
+
+message Register {
+  required string email = 1;
+  required string plaintextPassword = 2;
+}
+
+message Authenticate {
+  required string email = 1;
+  required string plaintextPassword = 2;
 }
 
 message JoinRoom {

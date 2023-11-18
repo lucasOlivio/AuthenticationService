@@ -86,8 +86,7 @@ namespace authentication {
 
 enum CreateAccountWebFailure_Reason : int {
   CreateAccountWebFailure_Reason_ACCOUNT_ALREADY_EXISTS = 0,
-  CreateAccountWebFailure_Reason_INVALID_PASSWORD = 1,
-  CreateAccountWebFailure_Reason_INTERNAL_SERVER_ERROR = 2
+  CreateAccountWebFailure_Reason_INTERNAL_SERVER_ERROR = 1
 };
 bool CreateAccountWebFailure_Reason_IsValid(int value);
 constexpr CreateAccountWebFailure_Reason CreateAccountWebFailure_Reason_Reason_MIN = CreateAccountWebFailure_Reason_ACCOUNT_ALREADY_EXISTS;
@@ -457,9 +456,28 @@ class CreateAccountWebSuccess final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kTimeCreationFieldNumber = 3,
     kRequestIdFieldNumber = 1,
     kUserIdFieldNumber = 2,
   };
+  // required string timeCreation = 3;
+  bool has_timecreation() const;
+  private:
+  bool _internal_has_timecreation() const;
+  public:
+  void clear_timecreation();
+  const std::string& timecreation() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_timecreation(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_timecreation();
+  PROTOBUF_MUST_USE_RESULT std::string* release_timecreation();
+  void set_allocated_timecreation(std::string* timecreation);
+  private:
+  const std::string& _internal_timecreation() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_timecreation(const std::string& value);
+  std::string* _internal_mutable_timecreation();
+  public:
+
   // required int64 requestId = 1;
   bool has_requestid() const;
   private:
@@ -498,6 +516,7 @@ class CreateAccountWebSuccess final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr timecreation_;
   ::PROTOBUF_NAMESPACE_ID::int64 requestid_;
   ::PROTOBUF_NAMESPACE_ID::int64 userid_;
   friend struct ::TableStruct_authentication_2eproto;
@@ -630,8 +649,6 @@ class CreateAccountWebFailure final :
   typedef CreateAccountWebFailure_Reason Reason;
   static constexpr Reason ACCOUNT_ALREADY_EXISTS =
     CreateAccountWebFailure_Reason_ACCOUNT_ALREADY_EXISTS;
-  static constexpr Reason INVALID_PASSWORD =
-    CreateAccountWebFailure_Reason_INVALID_PASSWORD;
   static constexpr Reason INTERNAL_SERVER_ERROR =
     CreateAccountWebFailure_Reason_INTERNAL_SERVER_ERROR;
   static inline bool Reason_IsValid(int value) {
@@ -1462,7 +1479,7 @@ inline void CreateAccountWeb::set_allocated_plaintextpassword(std::string* plain
 
 // required int64 requestId = 1;
 inline bool CreateAccountWebSuccess::_internal_has_requestid() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
 inline bool CreateAccountWebSuccess::has_requestid() const {
@@ -1470,7 +1487,7 @@ inline bool CreateAccountWebSuccess::has_requestid() const {
 }
 inline void CreateAccountWebSuccess::clear_requestid() {
   requestid_ = int64_t{0};
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::_internal_requestid() const {
   return requestid_;
@@ -1480,7 +1497,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::requestid() const
   return _internal_requestid();
 }
 inline void CreateAccountWebSuccess::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   requestid_ = value;
 }
 inline void CreateAccountWebSuccess::set_requestid(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1490,7 +1507,7 @@ inline void CreateAccountWebSuccess::set_requestid(::PROTOBUF_NAMESPACE_ID::int6
 
 // required int64 userId = 2;
 inline bool CreateAccountWebSuccess::_internal_has_userid() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool CreateAccountWebSuccess::has_userid() const {
@@ -1498,7 +1515,7 @@ inline bool CreateAccountWebSuccess::has_userid() const {
 }
 inline void CreateAccountWebSuccess::clear_userid() {
   userid_ = int64_t{0};
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::_internal_userid() const {
   return userid_;
@@ -1508,12 +1525,70 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 CreateAccountWebSuccess::userid() const {
   return _internal_userid();
 }
 inline void CreateAccountWebSuccess::_internal_set_userid(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   userid_ = value;
 }
 inline void CreateAccountWebSuccess::set_userid(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_userid(value);
   // @@protoc_insertion_point(field_set:authentication.CreateAccountWebSuccess.userId)
+}
+
+// required string timeCreation = 3;
+inline bool CreateAccountWebSuccess::_internal_has_timecreation() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CreateAccountWebSuccess::has_timecreation() const {
+  return _internal_has_timecreation();
+}
+inline void CreateAccountWebSuccess::clear_timecreation() {
+  timecreation_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& CreateAccountWebSuccess::timecreation() const {
+  // @@protoc_insertion_point(field_get:authentication.CreateAccountWebSuccess.timeCreation)
+  return _internal_timecreation();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CreateAccountWebSuccess::set_timecreation(ArgT0&& arg0, ArgT... args) {
+ _has_bits_[0] |= 0x00000001u;
+ timecreation_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:authentication.CreateAccountWebSuccess.timeCreation)
+}
+inline std::string* CreateAccountWebSuccess::mutable_timecreation() {
+  std::string* _s = _internal_mutable_timecreation();
+  // @@protoc_insertion_point(field_mutable:authentication.CreateAccountWebSuccess.timeCreation)
+  return _s;
+}
+inline const std::string& CreateAccountWebSuccess::_internal_timecreation() const {
+  return timecreation_.Get();
+}
+inline void CreateAccountWebSuccess::_internal_set_timecreation(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  timecreation_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* CreateAccountWebSuccess::_internal_mutable_timecreation() {
+  _has_bits_[0] |= 0x00000001u;
+  return timecreation_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* CreateAccountWebSuccess::release_timecreation() {
+  // @@protoc_insertion_point(field_release:authentication.CreateAccountWebSuccess.timeCreation)
+  if (!_internal_has_timecreation()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return timecreation_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void CreateAccountWebSuccess::set_allocated_timecreation(std::string* timecreation) {
+  if (timecreation != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  timecreation_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), timecreation,
+      GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set_allocated:authentication.CreateAccountWebSuccess.timeCreation)
 }
 
 // -------------------------------------------------------------------
