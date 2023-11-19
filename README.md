@@ -7,14 +7,16 @@ Project 2 for "Network programming" class. A reusable authentication service tha
 ## Requirements
 
 - Visual studio 2022
+- MySQL 8.0
 
 ## How to run
 
 1. Unzip all libs from the .zip file in the "extern/lib/" folder
 2. Unzip the bin.zip
-3. Open the solution in VS
-4. build the ChatClient project
-5. Open the bin/Release folder and run the programs:
+3. Run the schemas/authdb.sql to create the authentication database
+4. Open the solution in VS
+5. build the ChatClient project
+6. Open the bin/Release folder and run the programs:
     - AuthenticationServer.exe
     - ChatServer.exe
     - ChatClient.exe
