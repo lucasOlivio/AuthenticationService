@@ -21,6 +21,10 @@ Project 2 for "Network programming" class. A reusable authentication service tha
     - ChatServer.exe
     - ChatClient.exe
 
+## Diagram
+
+![Web sequence](docs/websequencediagram.png)
+
 ### Screenshots
 
 ![Login screen](docs/loginpage.png)
