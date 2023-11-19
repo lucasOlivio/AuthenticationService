@@ -11,8 +11,15 @@ Project 2 for "Network programming" class. A reusable authentication service tha
 ## How to run
 
 1. Unzip all libs from the .zip file in the "extern/lib/" folder
-2. Open the solution in VS
-3. Run the startup project
+2. Unzip the bin.zip
+3. Open the solution in VS
+4. build the ChatClient project
+5. Open the bin/Release folder and run the programs:
+    - AuthenticationServer.exe
+    - ChatServer.exe
+    - ChatClient.exe
 
 ### Screenshots
 
+![Login screen](docs/loginpage.png)
+![Created screen](docs/createdpage.png)

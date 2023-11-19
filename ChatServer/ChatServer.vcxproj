@@ -74,11 +74,13 @@
     <IncludePath>$(SolutionDir)TCPLib\include\;$(ProjectDir)include\;$(SolutionDir)Extern\include\;$(SolutionDir)protobuffers\chat\;$(SolutionDir)AuthenticationClient\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)x64\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SolutionDir)protobuffers\chat\;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)TCPLib\include\;$(ProjectDir)include\;$(SolutionDir)Extern\include\;$(SolutionDir)protobuffers\chat\;$(SolutionDir)AuthenticationClient\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)x64\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SolutionDir)protobuffers\chat\;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
